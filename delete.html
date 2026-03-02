@@ -25,13 +25,11 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            /* FONDO GRADIENTE MODERNO */
             background-color: var(--bg-dark);
             background-image: 
                 radial-gradient(circle at top right, rgba(255, 69, 0, 0.18) 0%, transparent 50%),
                 radial-gradient(circle at bottom left, rgba(255, 69, 0, 0.12) 0%, transparent 50%);
             background-attachment: fixed;
-            
             color: var(--text-main);
             font-family: var(--font-body);
             line-height: 1.6;
@@ -39,10 +37,9 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            padding-top: 120px; /* Espacio para el Navbar fijo */
+            padding-top: 120px; 
         }
 
-        /* --- NAVBAR --- */
         nav {
             display: flex;
             justify-content: space-between;
@@ -107,9 +104,8 @@
             background: rgba(255, 255, 255, 0.05);
         }
 
-        /* --- CONTENEDOR DEL FORMULARIO --- */
         .form-container {
-            background-color: rgba(18, 18, 18, 0.85); /* Ligeramente translúcido para que se vea el gradiente atrás */
+            background-color: rgba(18, 18, 18, 0.85);
             backdrop-filter: blur(20px);
             padding: 40px;
             border-radius: 16px;
@@ -221,7 +217,60 @@
             box-shadow: 0 15px 35px -5px var(--brand-glow);
         }
 
-        /* --- MOBILE --- */
+        /* --- ESTILOS DEL PANEL DE RESULTADO (PLAN B) --- */
+        #resultadoContainer {
+            display: none; /* Oculto por defecto */
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .email-box {
+            background: rgba(255, 69, 0, 0.1);
+            border: 1px dashed var(--brand-primary);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .email-box strong { color: white; font-size: 1.1rem; letter-spacing: 1px; }
+
+        textarea {
+            width: 100%;
+            height: 250px;
+            background-color: #1a1a1a;
+            color: #ccc;
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 15px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            resize: none;
+            margin-bottom: 20px;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--text-muted);
+            color: white;
+            padding: 14px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            text-align: center;
+            transition: var(--transition);
+            text-transform: uppercase;
+        }
+        .btn-secondary:hover {
+            border-color: white;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
         @media (max-width: 600px) {
             .logo-text { font-size: 1.7rem; }
             .nav-logo-img { height: 35px; }
@@ -241,48 +290,73 @@
     </nav>
 
     <div class="form-container">
-        <h1>Baja de Cuenta</h1>
-        <p class="desc">Completa los datos para generar tu solicitud de baja definitiva. Esto abrirá tu correo listo para enviar.</p>
+        
+        <div id="formularioPrincipal">
+            <h1>Baja de Cuenta</h1>
+            <p class="desc">Completa los datos para generar tu solicitud de baja definitiva.</p>
 
-        <form id="deleteForm">
-            <div class="form-group">
-                <label for="nombre">Nombre</label>
-                <input type="text" id="nombre" placeholder="Tu nombre" required>
-            </div>
-
-            <div class="form-group">
-                <label for="apellido">Apellido</label>
-                <input type="text" id="apellido" placeholder="Tu apellido" required>
-            </div>
-
-            <div class="form-group">
-                <label for="identificacion">DNI o CUIL</label>
-                <input type="text" id="identificacion" placeholder="Ej: 35.123.456" required>
-            </div>
-
-            <div class="checkbox-group">
-                <label>Perfiles vinculados a tu cuenta:</label>
-                <div class="checkbox-item">
-                    <input type="checkbox" id="isWorker" value="Worker">
-                    <label for="isWorker">Soy Worker</label>
+            <form id="deleteForm">
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" placeholder="Tu nombre" required>
                 </div>
-                <div class="checkbox-item">
-                    <input type="checkbox" id="isEntrepreneur" value="Emprendedor">
-                    <label for="isEntrepreneur">Soy Emprendedor</label>
+
+                <div class="form-group">
+                    <label for="apellido">Apellido</label>
+                    <input type="text" id="apellido" placeholder="Tu apellido" required>
                 </div>
+
+                <div class="form-group">
+                    <label for="identificacion">DNI o CUIL</label>
+                    <input type="text" id="identificacion" placeholder="Ej: 35.123.456" required>
+                </div>
+
+                <div class="checkbox-group">
+                    <label>Perfiles vinculados a tu cuenta:</label>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="isWorker" value="Worker">
+                        <label for="isWorker">Soy Worker</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="isEntrepreneur" value="Emprendedor">
+                        <label for="isEntrepreneur">Soy Emprendedor</label>
+                    </div>
+                </div>
+
+                <div class="form-group" id="empresaContainer">
+                    <label for="emprendimiento">Nombre de tu Emprendimiento</label>
+                    <input type="text" id="emprendimiento" placeholder="Solo si eres Emprendedor">
+                </div>
+
+                <div class="warning">
+                    <strong>IMPORTANTE:</strong> Se requiere adjuntar foto del Frente y Dorso de tu DNI en el correo para validar tu identidad.
+                </div>
+
+                <button type="button" class="btn-primary" onclick="prepararCorreo()">Generar Solicitud</button>
+            </form>
+        </div>
+
+        <div id="resultadoContainer">
+            <h1>Paso Final</h1>
+            <p class="desc">Si tu aplicación de correo no se abrió automáticamente, copia el texto de abajo y envíalo manualmente.</p>
+
+            <div class="email-box">
+                Destinatario:<br>
+                <strong>soporte.iworker@gmail.com</strong>
             </div>
 
-            <div class="form-group" id="empresaContainer">
-                <label for="emprendimiento">Nombre de tu Emprendimiento</label>
-                <input type="text" id="emprendimiento" placeholder="Solo si eres Emprendedor">
-            </div>
+            <label>Mensaje generado:</label>
+            <textarea id="textoGenerado" readonly></textarea>
 
             <div class="warning">
-                <strong>ACCIÓN REQUERIDA:</strong> Al tocar el botón, se redactará un correo automático. <strong>DEBES adjuntar una foto del Frente y Dorso de tu DNI</strong> en ese correo antes de enviarlo a soporte.
+                <strong>NO OLVIDES:</strong> Adjuntar las fotos de tu DNI (Frente y Dorso) en el correo antes de enviarlo.
             </div>
 
-            <button type="button" class="btn-primary" onclick="prepararCorreo()">Generar Solicitud</button>
-        </form>
+            <button type="button" class="btn-primary" onclick="copiarAlPortapapeles()" id="btnCopiar">Copiar Mensaje</button>
+            <br>
+            <button type="button" class="btn-secondary" onclick="volverAlFormulario()">Editar Datos</button>
+        </div>
+
     </div>
 
     <script>
@@ -304,7 +378,7 @@
             if (isEntrepreneur) perfiles.push("Emprendedor");
             let perfilesTexto = perfiles.length > 0 ? perfiles.join(" y ") : "Solo Usuario Base";
 
-            // Armamos el texto usando saltos de línea literales (\n)
+            // Texto crudo para el textarea
             let bodyText = `Hola equipo de soporte de iWorker,\n\n`;
             bodyText += `Por la presente solicito la eliminación total e irreversible de mi cuenta y todos los datos asociados a ella.\n\n`;
             bodyText += `--- DATOS DE LA CUENTA ---\n`;
@@ -322,11 +396,43 @@
 
             const subject = `Solicitud de Baja de Cuenta - DNI: ${identificacion}`;
             
-            // LA MAGIA ESTÁ AQUÍ: encodeURIComponent convierte los espacios en %20 y los saltos en %0A de forma segura
-            const mailtoLink = `mailto:soporte.iworker@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`;
+            // 1. Llenamos el textarea y mostramos el Plan B en pantalla
+            document.getElementById('textoGenerado').value = bodyText;
+            document.getElementById('formularioPrincipal').style.display = 'none';
+            document.getElementById('resultadoContainer').style.display = 'block';
 
-            // Redirigimos de forma segura
-            window.location.href = mailtoLink;
+            // 2. Intentamos abrir el correo (Plan A)
+            const mailtoLink = `mailto:soporte.iworker@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`;
+            
+            // Usamos un pequeño delay para asegurarnos de que el cambio visual de UI ocurra antes de llamar a la app externa
+            setTimeout(() => {
+                window.location.href = mailtoLink;
+            }, 300);
+        }
+
+        function copiarAlPortapapeles() {
+            const textarea = document.getElementById('textoGenerado');
+            textarea.select();
+            textarea.setSelectionRange(0, 99999); /* Para celulares */
+            
+            navigator.clipboard.writeText(textarea.value).then(() => {
+                const btn = document.getElementById('btnCopiar');
+                const textoOriginal = btn.innerText;
+                btn.innerText = "¡Copiado correctamente!";
+                btn.style.background = "#28a745"; // Verde de éxito
+                
+                setTimeout(() => {
+                    btn.innerText = textoOriginal;
+                    btn.style.background = ""; // Vuelve al gradiente original
+                }, 3000);
+            }).catch(err => {
+                alert('No se pudo copiar el texto. Seleccionalo y cópialo manualmente.');
+            });
+        }
+
+        function volverAlFormulario() {
+            document.getElementById('resultadoContainer').style.display = 'none';
+            document.getElementById('formularioPrincipal').style.display = 'block';
         }
     </script>
 </body>
