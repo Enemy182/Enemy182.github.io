@@ -2,113 +2,234 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <title>Eliminar Cuenta - iWorker</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eliminación de Cuenta - iWorker</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+    
     <style>
+        /* --- CONFIGURACIÓN HEREDADA DE INDEX --- */
+        :root {
+            --brand-primary: #FF4500; 
+            --brand-glow: rgba(255, 69, 0, 0.6);
+            --bg-dark: #050505;
+            --bg-card: #121212;
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --font-head: 'Montserrat', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #121212;
-            color: #ffffff;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-body);
             line-height: 1.6;
-            margin: 0;
-            padding: 20px;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             min-height: 100vh;
+            padding-top: 120px; /* Espacio para el Navbar fijo */
         }
-        .container {
-            background-color: #1e1e1e;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            max-width: 500px;
+
+        /* --- NAVBAR --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            background: rgba(5, 5, 5, 0.85);
+            backdrop-filter: blur(15px);
+            position: fixed; 
             width: 100%;
-            border: 1px solid #333;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
+
+        .brand-container {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            gap: 12px; 
+        }
+
+        .logo-text { 
+            font-family: var(--font-head); 
+            font-size: 2rem; 
+            font-weight: 900; 
+            color: white; 
+            letter-spacing: -1px; 
+        }
+        .logo-text span { color: var(--brand-primary); }
+
+        .nav-logo-img {
+            height: 42px; 
+            width: auto;
+            background: rgba(255, 69, 0, 0.08);
+            border: 1px solid rgba(255, 69, 0, 0.25); 
+            border-radius: 10px; 
+            padding: 4px; 
+            box-shadow: 0 0 15px -5px var(--brand-glow);
+            transition: var(--transition);
+        }
+        .brand-container:hover .nav-logo-img {
+            box-shadow: 0 0 25px -2px var(--brand-glow);
+            border-color: var(--brand-primary);
+            transform: scale(1.03);
+        }
+
+        .btn-back {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: var(--transition);
+            border: 1px solid #333;
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+        .btn-back:hover {
+            color: white;
+            border-color: white;
+        }
+
+        /* --- CONTENEDOR DEL FORMULARIO --- */
+        .form-container {
+            background-color: var(--bg-card);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            max-width: 550px;
+            width: 90%;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 50px;
+        }
+
         h1 {
-            color: #ff5722; /* Deep Orange */
+            font-family: var(--font-head);
+            color: var(--brand-primary);
             margin-top: 0;
             text-align: center;
+            font-size: 2.2rem;
+            letter-spacing: -1px;
         }
-        p {
-            color: #b0b0b0;
+
+        p.desc {
+            color: var(--text-muted);
             font-size: 0.95rem;
-            margin-bottom: 20px;
+            text-align: center;
+            margin-bottom: 30px;
         }
-        .form-group {
-            margin-bottom: 15px;
-        }
+
+        .form-group { margin-bottom: 20px; }
+        
         label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             color: #e0e0e0;
-            font-weight: bold;
+            font-weight: 600;
+            font-size: 0.9rem;
         }
-        input[type="text"], 
-        input[type="email"] {
+
+        input[type="text"] {
             width: 100%;
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid #444;
-            background-color: #2d2d2d;
+            padding: 14px;
+            border-radius: 10px;
+            border: 1px solid #333;
+            background-color: #1a1a1a;
             color: #fff;
             box-sizing: border-box;
+            font-family: var(--font-body);
+            transition: var(--transition);
         }
         input[type="text"]:focus {
             outline: none;
-            border-color: #ff5722;
+            border-color: var(--brand-primary);
+            background-color: #222;
         }
+
         .checkbox-group {
-            background-color: #2d2d2d;
+            background-color: #1a1a1a;
             padding: 15px;
-            border-radius: 8px;
-            border: 1px solid #444;
-            margin-bottom: 15px;
+            border-radius: 10px;
+            border: 1px solid #333;
+            margin-bottom: 20px;
         }
         .checkbox-item {
             display: flex;
             align-items: center;
-            margin-bottom: 10px;
-            font-weight: normal;
+            margin-bottom: 12px;
+            color: #ccc;
         }
+        .checkbox-item:last-child { margin-bottom: 0; }
         .checkbox-item input {
-            margin-right: 10px;
-            transform: scale(1.2);
-            accent-color: #ff5722;
+            margin-right: 12px;
+            transform: scale(1.3);
+            accent-color: var(--brand-primary);
         }
+
         .warning {
-            background-color: rgba(255, 87, 34, 0.1);
-            border-left: 4px solid #ff5722;
+            background-color: rgba(255, 69, 0, 0.08);
+            border-left: 4px solid var(--brand-primary);
             padding: 15px;
-            margin: 20px 0;
-            border-radius: 0 4px 4px 0;
-            font-size: 0.9rem;
+            margin: 25px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.85rem;
+            color: #ddd;
         }
-        .btn {
+        .warning strong { color: var(--brand-primary); }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ff5e00 0%, #ff3b00 100%);
+            color: white;
+            box-shadow: 0 10px 25px -5px var(--brand-glow);
+            padding: 16px;
+            font-weight: 700;
+            font-size: 15px;
+            border-radius: 50px;
+            text-transform: uppercase;
+            cursor: pointer;
             display: block;
             width: 100%;
-            background-color: #ff5722;
-            color: #ffffff;
-            padding: 14px;
+            transition: var(--transition);
             border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background-color 0.3s;
             text-align: center;
+            font-family: var(--font-body);
+            letter-spacing: 0.5px;
         }
-        .btn:hover {
-            background-color: #e64a19;
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.02);
+            filter: brightness(1.1);
+            box-shadow: 0 15px 35px -5px var(--brand-glow);
+        }
+
+        /* --- MOBILE --- */
+        @media (max-width: 600px) {
+            .logo-text { font-size: 1.7rem; }
+            .nav-logo-img { height: 35px; }
+            .form-container { padding: 30px 20px; width: 95%; }
+            h1 { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Eliminar Cuenta</h1>
-        <p>Completa este formulario para generar la solicitud de baja. Se abrirá tu aplicación de correo con los datos listos para enviar.</p>
+    <nav>
+        <a href="index.html" class="brand-container">
+            <span class="logo-text">iWorker<span>.</span></span>
+            <img src="logo.png" alt="iWorker Logo" class="nav-logo-img" onerror="this.style.display='none'">
+        </a>        
+        <a href="index.html" class="btn-back">Volver al Inicio</a>
+    </nav>
+
+    <div class="form-container">
+        <h1>Baja de Cuenta</h1>
+        <p class="desc">Completa los datos para generar tu solicitud de baja definitiva. Esto abrirá tu correo listo para enviar.</p>
 
         <form id="deleteForm">
             <div class="form-group">
@@ -123,18 +244,18 @@
 
             <div class="form-group">
                 <label for="identificacion">DNI o CUIL</label>
-                <input type="text" id="identificacion" placeholder="Ej: 35.123.456 o 20-35123456-7" required>
+                <input type="text" id="identificacion" placeholder="Ej: 35.123.456" required>
             </div>
 
             <div class="checkbox-group">
-                <label>¿Qué perfiles tienes activos en iWorker?</label>
+                <label>Perfiles vinculados a tu cuenta:</label>
                 <div class="checkbox-item">
                     <input type="checkbox" id="isWorker" value="Worker">
-                    <label for="isWorker">Perfil de Worker</label>
+                    <label for="isWorker">Soy Worker</label>
                 </div>
                 <div class="checkbox-item">
                     <input type="checkbox" id="isEntrepreneur" value="Emprendedor">
-                    <label for="isEntrepreneur">Perfil de Emprendedor</label>
+                    <label for="isEntrepreneur">Soy Emprendedor</label>
                 </div>
             </div>
 
@@ -144,10 +265,10 @@
             </div>
 
             <div class="warning">
-                <strong>ATENCIÓN:</strong> Al presionar el botón, se abrirá tu correo. <strong>DEBES adjuntar una foto del Frente y Dorso de tu DNI</strong> en ese correo antes de enviarlo para validar tu identidad.
+                <strong>ACCIÓN REQUERIDA:</strong> Al tocar el botón, se redactará un correo automático. <strong>DEBES adjuntar una foto del Frente y Dorso de tu DNI</strong> en ese correo antes de enviarlo a soporte.
             </div>
 
-            <button type="button" class="btn" onclick="prepararCorreo()">Generar Solicitud de Baja</button>
+            <button type="button" class="btn-primary" onclick="prepararCorreo()">Generar Solicitud</button>
         </form>
     </div>
 
@@ -161,36 +282,35 @@
             const emprendimiento = document.getElementById('emprendimiento').value.trim();
 
             if (!nombre || !apellido || !identificacion) {
-                alert("Por favor, completa tu Nombre, Apellido y DNI/CUIL.");
+                alert("Por favor, completa Nombre, Apellido y DNI/CUIL.");
                 return;
             }
 
             let perfiles = [];
             if (isWorker) perfiles.push("Worker");
             if (isEntrepreneur) perfiles.push("Emprendedor");
-            let perfilesTexto = perfiles.length > 0 ? perfiles.join(" y ") : "Ninguno especificado";
+            let perfilesTexto = perfiles.length > 0 ? perfiles.join(" y ") : "Solo Usuario Base";
 
             let body = `Hola equipo de soporte de iWorker,%0A%0A`;
             body += `Por la presente solicito la eliminación total e irreversible de mi cuenta y todos los datos asociados a ella.%0A%0A`;
-            body += `DATOS DE LA CUENTA:%0A`;
-            body += `- Nombre completo: ${nombre} ${apellido}%0A`;
-            body += `- DNI/CUIL: ${identificacion}%0A`;
-            body += `- Perfiles activos: ${perfilesTexto}%0A`;
+            body += `--- DATOS DE LA CUENTA ---%0A`;
+            body += `Nombre: ${nombre} ${apellido}%0A`;
+            body += `DNI/CUIL: ${identificacion}%0A`;
+            body += `Perfiles activos: ${perfilesTexto}%0A`;
             
             if (isEntrepreneur && emprendimiento) {
-                body += `- Nombre del Emprendimiento: ${emprendimiento}%0A`;
+                body += `Emprendimiento: ${emprendimiento}%0A`;
             }
 
-            body += `%0A[RECORDATORIO: ADJUNTA AQUÍ LAS FOTOS DE TU DNI (FRENTE Y DORSO) ANTES DE ENVIAR ESTE CORREO]%0A%0A`;
-            body += `Aguardo confirmación de la baja.%0A`;
+            body += `%0A[ATENCIÓN USUARIO: ADJUNTA AQUÍ LAS FOTOS DE TU DNI (FRENTE Y DORSO) ANTES DE ENVIAR ESTE CORREO]%0A%0A`;
+            body += `Aguardo confirmación.%0A`;
             body += `Gracias.`;
 
-            const subject = `Solicitud de Baja de Cuenta - DNI/CUIL: ${identificacion}`;
+            const subject = `Solicitud de Baja de Cuenta - DNI: ${identificacion}`;
             const mailtoLink = `mailto:soporte.iworker@gmail.com?subject=${subject}&body=${body}`;
 
             window.location.href = mailtoLink;
         }
     </script>
-
 </body>
 </html>
