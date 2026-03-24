@@ -341,7 +341,6 @@
             font-size: 2.5rem;  
             margin-bottom: 10px;  
         } 
-        .profile-content h2 span { color: var(--brand-primary); } 
 
         .profile-role { color: var(--brand-primary); font-weight: 600; 
             margin-bottom: 20px; display: block; text-transform: uppercase; 
@@ -472,7 +471,7 @@
         /* Ajuste Mobile para tarjetas */ 
         @media (max-width: 600px) { 
             .cards-grid { grid-template-columns: 1fr; } 
-            
+             
             /* MOBILE: 16/9 */
             .role-card { aspect-ratio: 16 / 9; }  
         } 
@@ -503,7 +502,7 @@
             transform: scale(0.9); 
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
-            
+             
             /* --- MEJORA DE MODALES (SCROLLABLE) --- */
             max-height: 85vh; 
             overflow-y: auto; 
@@ -556,7 +555,7 @@
 
         /* --- RESPONSIVE MOBILE ACTUALIZADO --- */ 
         @media (max-width: 1000px) { 
-            
+             
             /* Hacemos visible el botón Beta móvil */
             .nav-cta-mobile { display: inline-block; }
 
@@ -640,7 +639,7 @@
 <body> 
 
     <nav>
-<a href="#" class="brand-container">
+        <a href="#" class="brand-container">
             <span class="logo-text">iWorker<span>.</span></span>
             <img src="logo.png" alt="iWorker Logo" class="nav-logo-img">
         </a>        
@@ -655,8 +654,9 @@
             <button onclick="openModal('donaciones'); toggleMenu()">Donaciones</button>
             <button onclick="openModal('sponsor'); toggleMenu()">Sponsors</button>
             <button onclick="openModal('faq'); toggleMenu()">FAQ</button>
+            <button onclick="openModal('agradecimientos'); toggleMenu()">Agradecimientos</button>
             <button onclick="openModal('contacto'); toggleMenu()">Contacto</button>
-            </div>
+        </div>
 
         <a href="#" class="nav-cta-desktop" onclick="alert('¡Gracias por tu interés! La Beta se abrirá muy pronto.')">BETA</a>
     </nav>
@@ -689,7 +689,7 @@
             <img src="perfil.webp" alt="Alejandro Simos" class="profile-img"> 
         </div> 
         <div class="profile-content"> 
-            <h2>Alejandro <span>Simos</span></h2> 
+            <h2>Alejandro Simos</h2> 
             <span class="profile-role">Fundador & Desarrollador</span> 
              
             <div class="profile-text"> 
@@ -900,7 +900,35 @@
                     Jurisdicción exclusiva: Tribunales Ordinarios de la Provincia del Chubut. 
                 </p> 
             ` 
-            } 
+            },
+            "agradecimientos": {
+                title: "🙏 Agradecimiento Especial",
+                text: `
+                    <p>Quiero expresar mi más sincero agradecimiento a los beta testers de iWorker. Su dedicación, tiempo y valiosos comentarios han sido fundamentales para pulir y mejorar esta plataforma antes de su lanzamiento.</p>
+                    <p>Gracias a cada uno de ustedes por creer en este proyecto:</p>
+                    <ul>
+                        <li>Daniela Perez</li>
+                        <li>Angel Quinteros</li>
+                        <li>Sandra Mónica Ayán</li>
+                        <li>Benjamín Quiroga</li>
+                        <li>Macarena Carreras</li>
+                        <li>Alejandro Arramendi</li>
+                        <li>Emanuel Isaías Frías Romero</li>
+                        <li>Romina Juarez</li>
+                        <li>Alicia Ojeda</li>
+                        <li>Jeremías Barrionuevo</li>
+                        <li>Franco Norval</li>
+                        <li>Pablo Daniel Paez</li>
+                        <li>Marcos Acosta</li>
+                        <li>Oscar Julián García</li>
+                        <li>Stefania Krause</li>
+                        <li>Silvina Mercado</li>
+                        <li>Carolina Florencia Paez</li>
+                        <li>Jonathan Araneda</li>
+                        <li>Walter Aranda</li>
+                    </ul>
+                `
+            }
         }; 
 
         const modalBackdrop = document.getElementById('modalBackdrop'); 
