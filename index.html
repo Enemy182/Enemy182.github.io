@@ -1,971 +1,287 @@
-<!DOCTYPE html> 
-<html lang="es"> 
-<head> 
-    <meta charset="UTF-8"> 
-    <title>iWorker C.R</title> 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <link rel="icon" type="image/png" href="favicon.png"> 
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EnemyDev · Alejandro Simos</title>
+  <meta name="description" content="Apps hechas en Comodoro Rivadavia por Alejandro Simos (EnemyDev): HEM - Horas Extras M.C.R e iWorker.">
+  <meta name="theme-color" content="#0d0b1f">
+  <meta property="og:title" content="EnemyDev · Alejandro Simos">
+  <meta property="og:description" content="Apps hechas en Comodoro Rivadavia: HEM - Horas Extras M.C.R e iWorker.">
+  <meta property="og:image" content="assets/hem.png">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237c3aed'/%3E%3Cstop offset='1' stop-color='%23db2777'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Ctext x='32' y='45' font-family='Arial' font-weight='900' font-size='36' text-anchor='middle' fill='white'%3EE%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d0b1f;
+      --bg-2: #15122e;
+      --card: rgba(255, 255, 255, 0.05);
+      --card-border: rgba(255, 255, 255, 0.10);
+      --text: #f4f2ff;
+      --muted: #b4afd1;
+      --violet: #7c3aed;
+      --violet-2: #a78bfa;
+      --pink: #db2777;
+      --grad: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #db2777 100%);
+      --radius: 22px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(900px 500px at 85% -10%, rgba(124, 58, 237, 0.28), transparent 60%),
+        radial-gradient(700px 420px at -10% 30%, rgba(219, 39, 119, 0.14), transparent 60%),
+        var(--bg);
+      min-height: 100vh;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 0 20px; }
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet"> 
-     
-    <style> 
-        /* --- CONFIGURACIÓN GENERAL --- */ 
-        :root { 
-            --brand-primary: #FF4500;  
-            --brand-glow: rgba(255, 69, 0, 0.6); 
-            --bg-dark: #050505; 
-            --bg-card: #121212; 
-            --text-main: #ffffff; 
-            --text-muted: #aaaaaa; 
-            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); 
-            --font-head: 'Montserrat', sans-serif; 
-            --font-body: 'Inter', sans-serif; 
-        } 
+    /* Barra superior */
+    header.top {
+      position: sticky; top: 0; z-index: 10;
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      background: rgba(13, 11, 31, 0.72);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    header.top .wrap { display: flex; align-items: center; justify-content: space-between; height: 62px; }
+    .brand { font-family: Montserrat, sans-serif; font-weight: 900; font-size: 1.15rem; letter-spacing: .3px; text-decoration: none; }
+    .brand span { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    nav a { text-decoration: none; color: var(--muted); font-weight: 600; font-size: .92rem; margin-left: 18px; }
+    nav a:hover { color: var(--text); }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; } 
-         
-        body { 
-            background-color: var(--bg-dark); 
-            color: var(--text-main); 
-            font-family: var(--font-body); 
-            overflow-x: hidden; 
-            line-height: 1.6; 
-        } 
+    /* Presentación */
+    .hero { display: grid; grid-template-columns: 220px 1fr; gap: 40px; align-items: center; padding: 64px 0 40px; }
+    .avatar {
+      width: 220px; height: 220px; border-radius: 50%; padding: 5px;
+      background: var(--grad);
+      box-shadow: 0 20px 60px rgba(124, 58, 237, 0.35);
+    }
+    .avatar img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; object-position: 50% 30%; display: block; background: var(--bg-2); }
+    .kicker { color: var(--violet-2); font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; font-size: .78rem; margin: 0 0 6px; }
+    h1 { font-family: Montserrat, sans-serif; font-weight: 900; font-size: clamp(2rem, 5vw, 3.1rem); line-height: 1.1; margin: 0 0 14px; }
+    h1 .grad { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .bio { color: var(--muted); font-size: 1.05rem; margin: 0 0 18px; max-width: 620px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 0; list-style: none; }
+    .chips li { font-size: .82rem; font-weight: 600; padding: 6px 12px; border-radius: 99px; background: var(--card); border: 1px solid var(--card-border); color: var(--text); }
 
-        /* --- BOTONES --- */ 
-        .btn { 
-            padding: 14px 32px; 
-            font-weight: 700; 
-            font-size: 14px; 
-            border-radius: 50px; 
-            text-transform: uppercase; 
-            cursor: pointer; 
-            display: inline-block; 
-            transition: var(--transition); 
-            border: none; 
-            text-decoration: none; 
-            letter-spacing: 0.5px; 
-            position: relative; 
-            overflow: hidden; 
-            font-family: var(--font-body); 
-        } 
+    /* Secciones */
+    section { padding: 34px 0; }
+    h2 { font-family: Montserrat, sans-serif; font-weight: 800; font-size: 1.6rem; margin: 0 0 6px; }
+    .lead { color: var(--muted); margin: 0 0 22px; }
 
-        .btn-primary { 
-            background: linear-gradient(135deg, #ff5e00 0%, #ff3b00 100%); 
-            color: white; 
-            box-shadow: 0 10px 25px -5px var(--brand-glow); 
-        } 
-         
-        .btn-primary:hover {  
-            transform: translateY(-3px) scale(1.02);  
-            box-shadow: 0 15px 35px -5px var(--brand-glow);  
-            filter: brightness(1.1); 
-        } 
+    /* Tarjetas de apps */
+    .apps { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .app {
+      position: relative; display: flex; flex-direction: column;
+      background: var(--card); border: 1px solid var(--card-border);
+      border-radius: var(--radius); padding: 24px;
+      transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+    }
+    .app:not(.off):hover { transform: translateY(-4px); border-color: rgba(167, 139, 250, 0.45); box-shadow: 0 18px 50px rgba(124, 58, 237, 0.22); }
+    .app-head { display: flex; gap: 16px; align-items: center; margin-bottom: 14px; }
+    .app-icon { width: 68px; height: 68px; border-radius: 18px; background: var(--bg-2); display: grid; place-items: center; flex: none; overflow: hidden; border: 1px solid var(--card-border); }
+    .app-icon img { width: 82%; height: 82%; object-fit: contain; }
+    .app h3 { margin: 0; font-family: Montserrat, sans-serif; font-weight: 800; font-size: 1.2rem; line-height: 1.2; }
+    .app .sub { margin: 2px 0 0; color: var(--muted); font-size: .88rem; }
+    .app p.desc { color: var(--muted); margin: 0 0 16px; flex: 1; }
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 18px; padding: 0; list-style: none; }
+    .tags li { font-size: .75rem; font-weight: 700; padding: 4px 10px; border-radius: 99px; background: rgba(124, 58, 237, 0.18); color: #d9ccff; }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 12px 18px; border-radius: 14px; font-weight: 700; font-size: .95rem;
+      text-decoration: none; border: 1px solid transparent; cursor: pointer; flex: 1 1 auto;
+      transition: filter .2s ease, background .2s ease;
+    }
+    .btn svg { width: 18px; height: 18px; flex: none; }
+    .btn.primary { background: var(--grad); color: #fff; }
+    .btn.primary:hover { filter: brightness(1.12); }
+    .btn.ghost { background: transparent; color: var(--text); border-color: var(--card-border); }
+    .btn.ghost:hover { background: rgba(255, 255, 255, 0.06); }
 
-        /* --- NAVBAR ESTILOS GENERALES --- */ 
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 5%;
-            background: rgba(5, 5, 5, 0.85);
-            backdrop-filter: blur(15px);
-            /* ESTAS PROPIEDADES LA HACEN FIJA EN MOBILE Y PC: */
-            position: fixed; 
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
+    /* App deshabilitada */
+    .app.off { cursor: not-allowed; }
+    .app.off > *:not(.off-tip):not(.badge) { filter: grayscale(1); opacity: .45; }
+    .app.off .btn { pointer-events: none; }
+    .badge {
+      position: absolute; top: 16px; right: 16px;
+      font-size: .72rem; font-weight: 800; letter-spacing: .4px;
+      padding: 5px 10px; border-radius: 99px;
+      background: rgba(245, 158, 11, 0.16); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.35);
+    }
+    .off-tip {
+      position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) scale(.96);
+      background: #1f1b3d; color: var(--text); border: 1px solid var(--card-border);
+      padding: 12px 16px; border-radius: 14px; font-weight: 700; text-align: center;
+      box-shadow: 0 14px 40px rgba(0, 0, 0, .45);
+      opacity: 0; pointer-events: none; transition: opacity .2s ease, transform .2s ease;
+      width: max-content; max-width: 85%;
+    }
+    .off-tip small { display: block; font-weight: 500; color: var(--muted); margin-top: 2px; }
+    .app.off:hover .off-tip, .app.off:focus-visible .off-tip, .app.off.show .off-tip { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    .app.off:focus-visible { outline: 2px solid var(--violet-2); outline-offset: 3px; }
 
-        .logo-text { 
-            font-family: var(--font-head); 
-            font-size: 2rem; 
-            font-weight: 900; 
-            color: white; 
-            text-decoration: none; 
-            letter-spacing: -1px; 
-        } 
-        .logo-text span { color: var(--brand-primary); } 
+    /* Contacto */
+    .contact {
+      display: flex; flex-wrap: wrap; gap: 18px; align-items: center; justify-content: space-between;
+      background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius); padding: 24px;
+    }
+    .contact p { margin: 4px 0 0; color: var(--muted); }
+    .contact .btn { flex: 0 0 auto; }
 
-        /* --- NUEVOS ESTILOS PARA LOGO EN NAVBAR --- */
-        .brand-container {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            gap: 12px; /* Espacio no exagerado entre texto y logo */
-        }
+    footer { color: var(--muted); font-size: .85rem; padding: 34px 0 44px; text-align: center; }
+    footer a { color: var(--muted); }
+    footer .legal { margin-top: 6px; font-size: .78rem; opacity: .8; }
 
-        /* Estilo del pequeño logo en la barra */
-        .nav-logo-img {
-            height: 42px; /* Altura acorde al texto */
-            width: auto;
-            /* Fondo acorde al estilo: sutil naranja oscuro translúcido */
-            background: rgba(255, 69, 0, 0.08);
-            border: 1px solid rgba(255, 69, 0, 0.25); /* Borde sutil */
-            border-radius: 10px; /* Bordes redondeados modernos */
-            padding: 4px; /* Espacio interno */
-            /* Pequeño resplandor naranja */
-            box-shadow: 0 0 15px -5px var(--brand-glow);
-            transition: var(--transition);
-        }
+    @media (max-width: 760px) {
+      .hero { grid-template-columns: 1fr; text-align: center; gap: 22px; padding: 40px 0 24px; }
+      .avatar { width: 168px; height: 168px; margin: 0 auto; }
+      .bio { margin-left: auto; margin-right: auto; }
+      .chips { justify-content: center; }
+      .apps { grid-template-columns: 1fr; }
+      nav a { margin-left: 12px; }
+      .contact { text-align: center; justify-content: center; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <a class="brand" href="#">Enemy<span>Dev</span></a>
+      <nav>
+        <a href="#apps">Apps</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+    </div>
+  </header>
 
-        /* Efecto al pasar el mouse sobre la marca */
-        .brand-container:hover .nav-logo-img {
-            box-shadow: 0 0 25px -2px var(--brand-glow);
-            border-color: var(--brand-primary);
-            transform: scale(1.03);
-        }
+  <main class="wrap">
+    <section class="hero">
+      <div class="avatar"><img src="assets/perfil.webp" alt="Alejandro Simos" width="220" height="220"></div>
+      <div>
+        <p class="kicker">EnemyDev · Comodoro Rivadavia</p>
+        <h1>Hola, soy <span class="grad">Alejandro Simos</span></h1>
+        <p class="bio">
+          Administrador de redes informáticas en la Municipalidad de Comodoro Rivadavia
+          y desarrollador de apps. Lo que empezó como un hobby hoy son herramientas
+          simples y gratuitas, pensadas para resolver problemas reales de la gente de
+          nuestra ciudad.
+        </p>
+        <ul class="chips">
+          <li>Redes e infraestructura</li>
+          <li>Apps Android · iPhone · Web</li>
+          <li>Ex UNPSJB · Ingeniería</li>
+        </ul>
+      </div>
+    </section>
 
-        /* Ajuste en mobile para que no ocupe tanto espacio si es necesario */
-        @media (max-width: 400px) {
-            .nav-logo-img { height: 35px; gap: 8px; }
-            .logo-text { font-size: 1.7rem; }
-        }
-        
-        .nav-links { display: flex; gap: 30px; align-items: center; } 
-         
-        .nav-links button {  
-            background: none; 
-            border: none; 
-            color: var(--text-muted); 
-            font-size: 14px;  
-            font-weight: 500;  
-            cursor: pointer; 
-            transition: var(--transition); 
-            font-family: var(--font-body); 
-            position: relative; 
-        } 
+    <section id="apps">
+      <h2>Mis apps</h2>
+      <p class="lead">Gratuitas y hechas en Comodoro Rivadavia.</p>
 
-        .nav-links button::after { 
-            content: ''; 
-            position: absolute; 
-            width: 0; 
-            height: 2px; 
-            bottom: -4px; 
-            left: 0; 
-            background-color: var(--brand-primary); 
-            transition: var(--transition); 
-        } 
-        .nav-links button:hover { color: white; } 
-        .nav-links button:hover::after { width: 100%; } 
-
-        /* --- ESTILOS NAVBAR MOBILE --- */
-        
-        /* Contenedor para agrupar botón Beta y Hamburguesa */
-        .nav-mobile-right {
-            display: flex;
-            align-items: center;
-            gap: 15px; /* Espacio entre botón Beta y Hamburguesa */
-        }
-
-        .hamburger-btn {
-            display: none; /* Oculto en PC */
-            background: none;
-            border: none;
-            color: white;
-            font-size: 28px;
-            cursor: pointer;
-            z-index: 1001;
-        }
-
-        .nav-cta-desktop {
-            background: var(--brand-primary);
-            color: white;
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 700;
-            text-decoration: none;
-            box-shadow: 0 4px 15px rgba(255, 69, 0, 0.4);
-            display: inline-block;
-        }
-
-        /* Botón Beta Móvil */
-        .nav-cta-mobile { 
-            display: none; /* Por defecto oculto en PC */
-            background: var(--brand-primary);
-            color: white;
-            padding: 6px 18px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-decoration: none;
-            box-shadow: 0 4px 10px rgba(255, 69, 0, 0.3);
-            transition: var(--transition);
-        }
-
-        /* --- HERO SECTION --- */ 
-        .hero { 
-            padding: 140px 8% 100px 8%; 
-            min-height: 100vh; 
-            background: radial-gradient(circle at 50% 30%, rgba(255, 69, 0, 0.08) 0%, transparent 70%); 
-            position: relative; 
-            overflow: hidden; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-        } 
-
-        .hero-logo-container { 
-            margin-bottom: 50px; 
-            text-align: center; 
-            z-index: 2; 
-        } 
-
-        .hero-logo-img { 
-            width: 220px; 
-            height: auto; 
-            display: block; 
-            filter: drop-shadow(0 10px 20px rgba(255,69,0,0.2)); 
-        } 
-
-        .hero-content-wrapper { 
-            display: flex; 
-            align-items: center; 
-            justify-content: space-between; 
-            width: 100%; 
-            max-width: 1200px; 
-        } 
-
-        .hero-text { flex: 1; padding-right: 40px; z-index: 2; } 
-         
-        .hero h1 {  
-            font-family: var(--font-head);  
-            font-size: 4.5rem;  
-            line-height: 0.95;  
-            margin-bottom: 25px;  
-            letter-spacing: -2px; 
-        } 
-         
-        .hero h1 span { color: var(--brand-primary); display: block; } 
-         
-        .hero p {  
-            color: var(--text-muted);  
-            font-size: 1.25rem;  
-            margin-bottom: 40px;  
-            max-width: 500px;  
-            font-weight: 300; 
-        } 
-
-        .hero-img-container { 
-            flex: 0.9; 
-            display: flex; 
-            justify-content: center; 
-            position: relative; 
-            z-index: 1; 
-            perspective: 1000px;  
-        } 
-
-        /* CELULAR */ 
-        .phone-mockup { 
-            width: 300px; 
-            height: 620px; 
-            background: #000; 
-            border-radius: 42px; 
-            position: relative; 
-            border: 4px solid #222;  
-            box-shadow: 0 20px 80px -10px rgba(255, 69, 0, 0.25); 
-            overflow: hidden; 
-            transform: rotateY(-25deg) rotateX(5deg); 
-            transition: transform 0.2s ease-out; 
-        } 
-         
-        .phone-mockup:hover {  
-            transform: rotateY(0deg) rotateX(0deg);  
-        } 
-
-        .phone-notch { 
-            position: absolute; 
-            top: 0; 
-            left: 50%; 
-            transform: translateX(-50%); 
-            width: 40%; 
-            height: 25px; 
-            background: #1a1a1a; 
-            border-bottom-left-radius: 15px; 
-            border-bottom-right-radius: 15px; 
-            z-index: 10; 
-        } 
-
-        .phone-screen { 
-            width: 100%; 
-            height: 100%; 
-            background-image: url('iworkerapp.webp'); 
-            background-size: cover; 
-            background-position: top center; 
-        } 
-
-        .bg-glow { 
-            position: absolute; 
-            top: 50%; 
-            left: 50%; 
-            transform: translate(-50%, -50%); 
-            width: 800px; 
-            height: 800px; 
-            background: radial-gradient(circle, rgba(255,69,0,0.08) 0%, transparent 70%); 
-            z-index: 0; 
-            pointer-events: none; 
-        } 
-
-        /* --- PERFIL CREADOR --- */ 
-        .profile-section { 
-            padding: 120px 8%; 
-            background: #080808; 
-            display: flex; 
-            align-items: center; 
-            gap: 60px; 
-            border-top: 1px solid rgba(255,255,255,0.03); 
-        } 
-
-        .profile-img-wrapper { 
-            flex: 0 0 320px; 
-            position: relative; 
-        } 
-
-        .profile-img { 
-            width: 320px; height: 320px; 
-            border-radius: 50%; 
-            object-fit: cover; 
-            border: 3px solid var(--brand-primary); 
-            box-shadow: 0 0 40px rgba(255, 69, 0, 0.15); 
-            transition: var(--transition); 
-        } 
-         
-        .profile-img:hover { transform: scale(1.05); filter: grayscale(0%); } 
-
-        .profile-content { flex: 1; } 
-         
-        .profile-content h2 {  
-            font-family: var(--font-head);  
-            font-size: 2.5rem;  
-            margin-bottom: 10px;  
-        } 
-
-        .profile-role { color: var(--brand-primary); font-weight: 600; 
-            margin-bottom: 20px; display: block; text-transform: uppercase; 
-            letter-spacing: 1px; font-size: 0.9rem;} 
-
-        .profile-text { 
-            color: #ccc; 
-            font-size: 1.05rem; 
-            line-height: 1.8; 
-        } 
-        .profile-text p { margin-bottom: 15px; } 
-         
-        /* --- CARDS ECOSISTEMA --- */ 
-        .ecosystem-section {  
-            padding: 80px 5% 120px 5%;  
-            position: relative;  
-        } 
-         
-        .section-title {  
-            text-align: center;  
-            font-size: 3rem;  
-            margin-bottom: 60px;  
-            font-family: var(--font-head);  
-        } 
-        .section-title span { color: var(--brand-primary); } 
-
-        .cards-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-            gap: 25px; 
-        } 
-
-        .card-link { 
-            text-decoration: none; 
-            display: block; 
-            height: 100%; 
-        } 
-
-        .role-card { 
-            /* PC: CUADRADA */
-            aspect-ratio: 1 / 1;  
-            position: relative; 
-            border-radius: 12px; 
-            overflow: hidden; 
-            background: var(--bg-card); 
-            border: 1px solid rgba(255,255,255,0.05); 
-            transition: var(--transition); 
-        } 
-
-        .role-card img { 
-            width: 100%; height: 100%; 
-            object-fit: cover; 
-            transition: transform 0.6s ease; 
-        } 
-
-        .role-card:hover img { transform: scale(1.1); } 
-
-        /* CORTINA DE COLOR */ 
-        .card-overlay { 
-            position: absolute; 
-            inset: 0; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: flex-end; 
-            padding: 30px; 
-            z-index: 2; 
-            transition: opacity 0.3s; 
-        } 
-
-        .role-user .card-overlay { 
-            background: linear-gradient(to top, #cf3800 10%, rgba(207, 56, 0, 0.7) 40%, transparent 100%); 
-        } 
-
-        .role-worker .card-overlay { 
-            background: linear-gradient(to top, #111827 10%, rgba(17, 24, 39, 0.8) 40%, transparent 100%); 
-        } 
-
-        .role-entrepreneur .card-overlay { 
-            background: linear-gradient(to top, #2e003e 10%, rgba(46, 0, 62, 0.8) 40%, transparent 100%); 
-        } 
-
-        .card-title {  
-            color: white;  
-            font-size: 2.2rem;  
-            font-family: var(--font-head);  
-            font-weight: 800; 
-            margin-bottom: 10px; 
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3); 
-        } 
-         
-        .card-desc {  
-            color: rgba(255,255,255,0.95);  
-            font-size: 1rem;  
-            font-weight: 500; 
-            line-height: 1.4; 
-            transform: translateY(0); 
-        } 
-
-        /* Link a TyC */ 
-        .legal-link-container { 
-            text-align: center; 
-            margin-top: 60px; 
-        } 
-        .legal-link { 
-            color: var(--text-muted); 
-            text-decoration: none; 
-            font-size: 0.9rem; 
-            border-bottom: 1px solid transparent; 
-            transition: var(--transition); 
-        } 
-        .legal-link:hover { 
-            color: var(--brand-primary); 
-            border-color: var(--brand-primary); 
-        } 
-        .legal-btn-ghost { 
-            background: transparent; 
-            border: 1px solid #333; 
-            color: var(--text-muted); 
-            padding: 8px 16px; 
-            border-radius: 20px; 
-            margin-left: 10px; 
-            font-size: 0.8rem; 
-            cursor: pointer; 
-            transition: var(--transition); 
-        } 
-        .legal-btn-ghost:hover { border-color: var(--text-main); color: var(--text-main); } 
-
-        /* Ajuste Mobile para tarjetas */ 
-        @media (max-width: 600px) { 
-            .cards-grid { grid-template-columns: 1fr; } 
-             
-            /* MOBILE: 16/9 */
-            .role-card { aspect-ratio: 16 / 9; }  
-        } 
-         
-        /* --- MODAL MODERNO --- */ 
-         
-        .modal-backdrop { 
-            position: fixed; 
-            top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0, 0, 0, 0.6); 
-            backdrop-filter: blur(8px); 
-            z-index: 2000; 
-            display: none; 
-            justify-content: center; 
-            align-items: center; 
-            opacity: 0; 
-            transition: opacity 0.3s ease; 
-        } 
-
-        .modal-container { 
-            background: rgba(20, 20, 20, 0.95); 
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-            width: 90%; 
-            max-width: 600px; 
-            border-radius: 20px; 
-            padding: 40px; 
-            position: relative; 
-            transform: scale(0.9); 
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
-             
-            /* --- MEJORA DE MODALES (SCROLLABLE) --- */
-            max-height: 85vh; 
-            overflow-y: auto; 
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Personalización de la barra de scroll del modal */
-        .modal-container::-webkit-scrollbar { width: 8px; }
-        .modal-container::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
-        .modal-container::-webkit-scrollbar-track { background: transparent; }
-
-        .modal-backdrop.active { display: flex; opacity: 1; } 
-        .modal-backdrop.active .modal-container { transform: scale(1); } 
-
-        .modal-close { 
-            position: absolute; 
-            top: 20px; right: 20px; 
-            background: rgba(255,255,255,0.1); 
-            border: none; 
-            color: white; 
-            width: 30px; height: 30px; 
-            border-radius: 50%; 
-            cursor: pointer; 
-            display: flex; align-items: center; justify-content: center; 
-            transition: var(--transition); 
-        } 
-        .modal-close:hover { background: var(--brand-primary); } 
-
-        .modal-title {  
-            color: var(--brand-primary);  
-            font-family: var(--font-head);  
-            font-size: 1.8rem;  
-            margin-bottom: 20px;  
-        } 
-         
-        .modal-body { color: #ddd; font-size: 1rem; line-height: 1.7; } 
-        .modal-body ul { padding-left: 20px; } 
-        .modal-body li { margin-bottom: 8px; } 
-
-        /* --- FOOTER --- */ 
-        footer { 
-            text-align: center; 
-            padding: 60px 20px; 
-            border-top: 1px solid rgba(255,255,255,0.05); 
-            color: var(--text-muted); 
-            font-size: 0.9rem; 
-        } 
-        footer strong { color: white; } 
-
-        /* --- RESPONSIVE MOBILE ACTUALIZADO --- */ 
-        @media (max-width: 1000px) { 
-             
-            /* Hacemos visible el botón Beta móvil */
-            .nav-cta-mobile { display: inline-block; }
-
-            /* Navbar Mobile */
-            .hamburger-btn { display: block; }
-            .nav-cta-desktop { display: none; } /* Ocultamos el botón beta de escritorio */
-
-            .nav-links {
-                display: none; /* Oculto por defecto */
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: rgba(10, 10, 10, 0.98); /* Fondo oscuro sólido */
-                backdrop-filter: blur(20px);
-                flex-direction: column;
-                padding: 30px 20px;
-                border-bottom: 1px solid rgba(255,255,255,0.1);
-                box-shadow: 0 20px 40px rgba(0,0,0,0.8);
-                gap: 20px;
-                animation: slideDown 0.3s ease;
-            }
-
-            .nav-links.active { display: flex; } /* Clase para mostrar menú */
-
-            /* Botones del menú más grandes para tocar con el dedo */
-            .nav-links button {
-                font-size: 1.1rem;
-                padding: 10px;
-                width: 100%;
-                text-align: left;
-                border-bottom: 1px solid rgba(255,255,255,0.05);
-            }
-
-            @keyframes slideDown {
-                from { opacity: 0; transform: translateY(-10px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
-
-            /* Modal en Mobile - Arreglo visual */
-            .modal-container {
-                width: 95%; /* Más ancho en celular */
-                padding: 25px; /* Menos padding */
-                margin: 0 10px;
-            }
-            .modal-title { font-size: 1.5rem; }
-            .modal-body { font-size: 0.95rem; }
-
-            /* Ajustes existentes del contenido */
-            .hero-content-wrapper { 
-                flex-direction: column;  
-                text-align: center;  
-            } 
-             
-            .hero-text { padding-right: 0; margin-bottom: 60px; } 
-            .hero h1 { font-size: 3.5rem; } 
-             
-            .phone-mockup { width: 260px; height: 520px; } 
-             
-            .profile-section { flex-direction: column; text-align: center; } 
-            .profile-img-wrapper { flex: auto; } 
-            .profile-img { width: 250px; height: 250px; margin: 0 auto; } 
-        } 
-        /* --- NAVBAR FIJO SOLO PARA PC (>1000px) --- */
-        @media (min-width: 1001px) {
-            nav {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                z-index: 5000; /* Valor alto para estar siempre encima */
-                
-                /* Fondo oscuro semitransparente y efecto vidrio */
-                background: rgba(5, 5, 5, 0.95); 
-                backdrop-filter: blur(10px); 
-                border-bottom: 1px solid rgba(255,255,255,0.05);
-            }
-        }
-    </style> 
-</head> 
-<body> 
-
-    <nav>
-        <a href="#" class="brand-container">
-            <span class="logo-text">iWorker<span>.</span></span>
-            <img src="logo.png" alt="iWorker Logo" class="nav-logo-img">
-        </a>        
-
-        <div class="nav-links" id="navLinks">
-            <button onclick="openModal('mision'); toggleMenu()">Misión</button>
-            <button onclick="openModal('vision'); toggleMenu()">Visión</button>
-            <button onclick="openModal('donaciones'); toggleMenu()">Donaciones</button>
-            <button onclick="openModal('sponsor'); toggleMenu()">Sponsors</button>
-            <button onclick="openModal('faq'); toggleMenu()">FAQ</button>
-            <button onclick="openModal('agradecimientos'); toggleMenu()">Agradecimientos</button>
-            <button onclick="openModal('contacto'); toggleMenu()">Contacto</button>
-        </div>
-
-        <div class="nav-mobile-right" style="display: flex; align-items: center; gap: 10px;">
-            <a href="https://chat.whatsapp.com/IuCpeD96DRPJBWtR4v85Kt" target="_blank" style="display: flex; align-items: center; gap: 4px; background: var(--brand-primary); color: white; padding: 6px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; text-decoration: none; box-shadow: 0 4px 10px rgba(255, 69, 0, 0.4); white-space: nowrap; transition: transform 0.3s ease;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" viewBox="0 0 16 16">
-                    <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
-                </svg>
-                Comunidad iWorker
+      <div class="apps">
+        <!-- HEM -->
+        <article class="app">
+          <div class="app-head">
+            <div class="app-icon"><img src="assets/hem.png" alt="Logo de HEM"></div>
+            <div>
+              <h3>HEM · Horas Extras M.C.R</h3>
+              <p class="sub">Registro de horas extras</p>
+            </div>
+          </div>
+          <p class="desc">
+            Marcá tu salida y la app calcula tus horas extras al 50% y al 100%,
+            los francos compensatorios y la planilla PDF del mes. Para empleados
+            municipales de Comodoro Rivadavia y para cualquier trabajador.
+          </p>
+          <ul class="tags"><li>iPhone</li><li>Android</li><li>Web</li><li>Sin registro</li></ul>
+          <div class="actions">
+            <a class="btn primary" href="/hem/">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              Abrir HEM
             </a>
-            <button class="hamburger-btn" onclick="toggleMenu()">&#9776;</button>
+            <a class="btn ghost" href="/hem/download/">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/></svg>
+              Instalar en el celular
+            </a>
+          </div>
+        </article>
+
+        <!-- iWorker (temporalmente fuera de servicio) -->
+        <article class="app off" tabindex="0" aria-disabled="true"
+                 title="Temporalmente fuera de servicio">
+          <span class="badge">Fuera de servicio</span>
+          <div class="app-head">
+            <div class="app-icon"><img src="assets/iworker.png" alt="Logo de iWorker"></div>
+            <div>
+              <h3>iWorker</h3>
+              <p class="sub">Trabajo independiente local</p>
+            </div>
+          </div>
+          <p class="desc">
+            La plataforma comodorense que conecta trabajadores independientes,
+            emprendedores y usuarios, directo y sin comisiones.
+          </p>
+          <ul class="tags"><li>Android</li><li>Comunidad</li></ul>
+          <div class="actions">
+            <span class="btn ghost">No disponible por ahora</span>
+          </div>
+          <div class="off-tip" role="tooltip">
+            Temporalmente fuera de servicio
+            <small>Vuelve pronto.</small>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="contacto">
+      <div class="contact">
+        <div>
+          <h2>¿Hablamos?</h2>
+          <p>Ideas, sugerencias, sponsors o cualquier consulta sobre las apps.</p>
         </div>
-    </nav>
+        <a class="btn primary" href="mailto:enemydev.iworker@gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7 8 6 8-6"/></svg>
+          Escribime
+        </a>
+      </div>
+    </section>
+  </main>
 
-    <header class="hero"> 
-        <div class="bg-glow"></div> 
+  <footer>
+    <div class="wrap">
+      © <span id="year">2026</span> EnemyDev · Alejandro Simos · Comodoro Rivadavia, Chubut
+      <div class="legal">
+        <a href="/hem/privacidad.html">Privacidad HEM</a> ·
+        <a href="iworker/terms.html">Términos iWorker</a> ·
+        <a href="iworker/delete.html">Eliminar cuenta iWorker</a>
+      </div>
+    </div>
+  </footer>
 
-        <div class="hero-content-wrapper"> 
-            <div class="hero-text"> 
-                <h1>Talento Local <br><span>Sin Límites</span></h1> 
-
-                <p>La plataforma Comodorense que conecta a trabajadores independientes, emprendedores y usuarios en una comunidad justa, directa y sin comisiones ocultas.</p> 
-                 
-                <a href="https://play.google.com/store/apps/details?id=com.enemydev.iworker" target="_blank" class="btn btn-primary"> 
-                    Únete a la BETA abierta! 
-                </a>
-            </div> 
-
-            <div class="hero-img-container"> 
-                <div class="phone-mockup"> 
-                    <div class="phone-notch"></div> 
-                    <div class="phone-screen"></div> 
-                </div> 
-            </div> 
-        </div> 
-    </header> 
-
-    <section class="profile-section"> 
-        <div class="profile-img-wrapper"> 
-            <img src="perfil.webp" alt="Alejandro Simos" class="profile-img"> 
-        </div> 
-        <div class="profile-content"> 
-            <h2>Alejandro Simos</h2> 
-            <span class="profile-role">Fundador & Desarrollador</span> 
-             
-            <div class="profile-text"> 
-
-                <p>Hola, soy Alejandro. Actualmente me desempeño como administrador de redes informáticas en la Municipalidad de Comodoro Rivadavia, gestionando infraestructura crítica con tecnología Huawei y Mikrotik.</p> 
-                 
-
-                <p>La programación comenzó como un hobby personal, pero rápidamente evolucionó hasta convertirse en 
-                <strong>iWorker</strong>. Este proyecto nace de una necesidad real que observé: visibilizar el inmenso talento de los trabajadores independientes y pequeños emprendedores que muchas veces quedan fuera de las grandes estructuras corporativas.</p> 
-                 
-
-                <p>Como ex-estudiante de la Facultad Ingeniería de la UNPSJB, enfoco mi conocimiento técnico en crear herramientas que no sean barreras, sino puentes para reducir la brecha digital en nuestra región.</p> 
-            </div> 
-        </div> 
-    </section> 
-
-    <section class="ecosystem-section"> 
-        <h2 class="section-title">Ecosistema <span>iWorker</span></h2> 
-         
-        <div class="cards-grid"> 
-            <a href="user.html" class="card-link"> 
-                <div class="role-card role-user"> 
-                    <img src="iworkeruser.webp" alt="Usuario"> 
-                    <div class="card-overlay"> 
-                        <div class="card-title">Usuario</div> 
-
-                        <div class="card-desc">Encontrá el trabajador ideal en segundos.</div> 
-                    </div> 
-                </div> 
-            </a> 
-
-            <a href="worker.html" class="card-link"> 
-                <div class="role-card role-worker"> 
-                    <img src="iworkerworker.webp" alt="Worker"> 
-                    <div class="card-overlay"> 
-                        <div class="card-title">Worker</div> 
-
-                        <div class="card-desc">Digitaliza tu oficio, gestiona tus clientes y aumenta tus ingresos.</div> 
-                    </div> 
-                </div> 
-            </a> 
-
-            <a href="entrepreneur.html" class="card-link"> 
-                <div class="role-card role-entrepreneur"> 
-                    <img src="iworkerentrepreneur.webp" alt="Emprendedor"> 
-                    <div class="card-overlay"> 
-                        <div class="card-title">Emprendedor</div> 
-
-                        <div class="card-desc">Tu vitrina digital disponible 24/7 para mostrar tus productos.</div> 
-                    </div> 
-                </div> 
-            </a> 
-        </div> 
-
-        <div class="legal-link-container"> 
-            <a href="terms.html" class="legal-link">Términos y Condiciones, Políticas de Privacidad y Uso de Cookies.</a> 
-            <button onclick="openModal('legales')" class="legal-btn-ghost">Resumen Legal</button> 
-            <br><br>
-            <a href="delete.html" class="legal-link" style="color: var(--brand-primary); border-color: rgba(255, 69, 0, 0.3);">Solicitar Eliminación de Cuenta</a>
-        </div>
-    </section> 
-
-    <div id="modalBackdrop" class="modal-backdrop" onclick="closeModal(event)"> 
-        <div class="modal-container"> 
-            <button class="modal-close" onclick="closeModal(null, true)">&times;</button> 
-            <h2 id="modalTitle" class="modal-title">Título</h2> 
-            <div id="modalBody" class="modal-body">Contenido...</div> 
-        </div> 
-    </div> 
-
-    <footer> 
-        <p>&copy; 2024 <strong>iWorker</strong>. Tecnología social para el crecimiento local.</p> 
-    </footer> 
-
-    <script> 
-        const contentData = { 
-            "mision": { 
-                title: "🚀 Misión", 
-                text: ` 
-                    <p>Conectar de forma simple, directa y transparente a personas con necesidades reales con trabajadores dispuestos a resolverlas.</p> 
-                    <ul> 
-                        <li><strong>Conectar:</strong> Sin intermediarios innecesarios.</li> 
-                        <li><strong>Visibilizar:</strong> Exposición real al trabajo local.</li> 
-                        <li><strong>Simplificar:</strong> Herramientas claras y accesibles.</li> 
-                        <li><strong>Respetar:</strong> Modelos justos sin condiciones abusivas.</li> 
-                    </ul> 
-                ` 
-            }, 
-
-            "vision": { 
-                title: "🌱 Visión", 
-                text: ` 
-                    <p>Convertirse en la plataforma de referencia regional para el trabajo independiente.</p> 
-                    <ul> 
-                        <li>Consolidar una comunidad basada en la confianza.</li> 
-                        <li>Expandirse gradualmente a otras ciudades.</li> 
-                        <li>Demostrar que la tecnología puede ser socialmente responsable.</li> 
-                    </ul> 
-                ` 
-            }, 
-
-            "donaciones": { 
-                title: "❤️ Donaciones", 
-                text: ` 
-                    <p>iWorker es gratuito. Las donaciones voluntarias mantienen viva la infraestructura técnica (servidores y seguridad) y permiten la mejora continua de la plataforma.</p> 
-                ` 
-            }, 
-
-            "sponsor": { 
-                title: "✨ Sponsors", 
-                text: ` 
-                    <p>Buscamos organizaciones que compartan nuestra visión de inclusión laboral y desarrollo local. Ser sponsor ofrece visibilidad dentro de una comunidad activa y comprometida.</p> 
-                ` 
-            }, 
-
-            "contacto": { 
-                title: "✉️ Contacto", 
-                text: ` 
-                    <p><strong>Email:</strong> enemydev.iworker@gmail.com</p> 
-                ` 
-            }, 
-
-            "faq": { 
-                title: "❓ Preguntas Frecuentes", 
-                text: ` 
-                    <ul> 
-                        <li><strong>¿Es gratuito?</strong> Sí, el registro y uso básico no tienen costo.</li> 
-                        <li><strong>¿Garantizan el trabajo?</strong> No, somos una herramienta de visibilidad; el acuerdo es privado entre las partes.</li> 
-                        <li><strong>¿Necesito seguro?</strong> Recomendamos a los Workers contar con Seguro de Accidentes Personales para su tranquilidad.</li> 
-                    </ul> 
-                ` 
-            }, 
-            "legales": { 
-                title: "⚖️ Resumen Legal iWorker", 
-                text: ` 
-                <p> 
-                    Este es un resumen informativo de los puntos legales más importantes. 
-                    El uso de iWorker implica la aceptación de nuestros Términos y Condiciones, 
-                    Política de Privacidad y Política de Cookies completas, disponibles en el sitio web oficial. 
-                </p> 
-
-                <ul> 
-                    <li> 
-                        <strong>1. Plataforma de intermediación:</strong> 
-                        iWorker es una herramienta tecnológica que facilita visibilidad, contacto y publicación 
-                        entre Usuarios, Workers y Emprendedores. No presta servicios, no ejecuta trabajos, 
-                        no vende productos ni intermedia pagos. 
-                    </li> 
-
-                    <li> 
-                        <strong>2. Independencia total:</strong> 
-                        No existe relación laboral, comercial ni societaria entre iWorker y los Workers o Emprendedores. 
-                        Cada parte fija libremente precios, condiciones y horarios, y asume sus propias obligaciones 
-                        legales, fiscales y previsionales. 
-                    </li> 
-
-                    <li> 
-                        <strong>3. Responsabilidad y garantías:</strong> 
-                        iWorker no certifica identidades, capacidades ni resultados. 
-                        Las relaciones y acuerdos se realizan de forma privada entre las partes. 
-                        La plataforma se brinda “tal cual” (AS IS), sin garantías de funcionamiento continuo 
-                        ni resultados esperados. 
-                    </li> 
-
-                    <li> 
-                        <strong>4. Pagos y monetización:</strong> 
-                        Todos los acuerdos económicos se realizan fuera de la aplicación. 
-                        iWorker no cobra comisiones por trabajos ni ventas. 
-                        La plataforma se sostiene mediante publicidad, donaciones voluntarias, 
-                        sponsors y servicios de visibilidad opcionales. 
-                    </li> 
-
-                    <li> 
-                        <strong>5. Edad mínima:</strong> 
-                        El uso de iWorker está permitido únicamente a personas mayores de 16 años. 
-                        El registro implica declarar información veraz y capacidad legal suficiente. 
-                    </li> 
-
-                    <li> 
-                        <strong>6. Geolocalización y ordenamiento:</strong> 
-                        Las búsquedas y distancias son aproximadas y automáticas. 
-                        El orden de resultados no implica recomendación, validación ni garantía de contratación. 
-                    </li> 
-
-                    <li> 
-                        <strong>7. Seguridad y seguros:</strong> 
-                        Se recomienda a los Workers contar con Seguro de Accidentes Personales (AP). 
-                        iWorker no lo provee, controla ni asume responsabilidad por accidentes o daños. 
-                    </li> 
-
-                    <li> 
-                        <strong>8. Datos personales:</strong> 
-                        Los datos se tratan conforme a la Ley 25.326. 
-                        La base de datos está registrada y los usuarios pueden ejercer sus derechos 
-                        de acceso, rectificación y eliminación. 
-                    </li> 
-
-                    <li> 
-                        <strong>9. Uso prohibido:</strong> 
-                        Está prohibido utilizar la plataforma para actividades ilegales, 
-                        contenido sexual, violencia, discriminación o venta de productos ilícitos. 
-                        Las infracciones pueden derivar en bloqueo permanente. 
-                    </li> 
-                </ul> 
-
-                <p style="font-size: 0.8rem; margin-top: 15px; color: #888;"> 
-                    Última actualización: Enero 2026 · Comodoro Rivadavia, Argentina. 
-                    Jurisdicción exclusiva: Tribunales Ordinarios de la Provincia del Chubut. 
-                </p> 
-            ` 
-            },
-            "agradecimientos": {
-                title: "🙏 Agradecimiento Especial",
-                text: `
-                    <p>Quiero expresar mi más sincero agradecimiento a los beta testers de iWorker. Su dedicación, tiempo y valiosos comentarios han sido fundamentales para pulir y mejorar esta plataforma antes de su lanzamiento.</p>
-                    <p>Gracias a cada uno de ustedes por creer en este proyecto:</p>
-                    <ul>
-                        <li>Daniela Perez</li>
-                        <li>Angel Quinteros</li>
-                        <li>Sandra Mónica Ayán</li>
-                        <li>Benjamín Quiroga</li>
-                        <li>Macarena Carreras</li>
-                        <li>Alejandro Arramendi</li>
-                        <li>Emanuel Isaías Frías Romero</li>
-                        <li>Romina Juarez</li>
-                        <li>Alicia Ojeda</li>
-                        <li>Jeremías Barrionuevo</li>
-                        <li>Franco Norval</li>
-                        <li>Pablo Daniel Paez</li>
-                        <li>Marcos Acosta</li>
-                        <li>Oscar Julián García</li>
-                        <li>Stefania Krause</li>
-                        <li>Silvina Mercado</li>
-                        <li>Carolina Florencia Paez</li>
-                        <li>Jonathan Araneda</li>
-                        <li>Walter Aranda</li>
-                    </ul>
-                `
-            }
-        }; 
-
-        const modalBackdrop = document.getElementById('modalBackdrop'); 
-        const modalTitle = document.getElementById('modalTitle'); 
-        const modalBody = document.getElementById('modalBody'); 
-
-        function openModal(key) { 
-            const data = contentData[key]; 
-            if(!data) return; 
-
-            modalTitle.innerHTML = data.title; 
-            modalBody.innerHTML = data.text; 
-             
-            modalBackdrop.classList.add('active'); 
-            document.body.style.overflow = 'hidden'; 
-        } 
-
-        function closeModal(event, force = false) { 
-            if (force || event.target === modalBackdrop) { 
-                modalBackdrop.classList.remove('active'); 
-                document.body.style.overflow = 'auto'; 
-            } 
-        }
-
-        function toggleMenu() {
-            const nav = document.getElementById('navLinks');
-            // Alternar clase 'active' para mostrar/ocultar
-            if (nav.classList.contains('active')) {
-                nav.classList.remove('active');
-            } else {
-                nav.classList.add('active');
-            }
-        }
-    </script> 
-</body> 
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    // En celulares no hay "mouseover": al tocar la tarjeta deshabilitada se
+    // muestra el aviso un par de segundos.
+    document.querySelectorAll('.app.off').forEach(function (card) {
+      var t;
+      card.addEventListener('click', function () {
+        card.classList.add('show');
+        clearTimeout(t);
+        t = setTimeout(function () { card.classList.remove('show'); }, 2200);
+      });
+    });
+  </script>
+</body>
 </html>
