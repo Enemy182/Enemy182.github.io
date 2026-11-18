@@ -283,6 +283,54 @@
     footer nav a { color: var(--dim); text-decoration: none; margin-left: 14px; }
     footer nav a:hover { color: var(--text); }
 
+    /* ---------- iWorker (fuera de servicio) ---------- */
+    .feature.iw {
+      margin-top: 22px; grid-template-columns: 1fr 1fr; padding-top: 64px;
+      background:
+        radial-gradient(600px 300px at 0% 0%, rgba(249,115,22,.12), transparent 70%),
+        radial-gradient(500px 300px at 100% 100%, rgba(148,163,184,.10), transparent 70%),
+        var(--bg-2);
+    }
+    .feature.iw .iw-visual, .feature.iw .iw-info { filter: grayscale(.9); opacity: .62; transition: filter .5s ease, opacity .5s ease; }
+    .feature.iw:hover .iw-visual, .feature.iw:hover .iw-info { filter: grayscale(.55); opacity: .8; }
+    .iw-ribbon {
+      position: absolute; top: 18px; left: 50%; transform: translateX(-50%); z-index: 3;
+      display: inline-flex; align-items: center; gap: 8px; white-space: nowrap;
+      padding: 8px 16px; border-radius: 99px; font-weight: 800; font-size: .84rem;
+      background: rgba(245,158,11,.14); color: #fbbf24; border: 1px solid rgba(245,158,11,.4);
+      box-shadow: 0 10px 30px -10px rgba(245,158,11,.4);
+    }
+    .iw-ribbon svg { width: 17px; height: 17px; animation: tick 4s linear infinite; }
+    @keyframes tick { to { transform: rotate(360deg); } }
+    .iw-visual { display: grid; grid-template-columns: 200px 1fr; gap: 16px; align-items: center; }
+    .feature.iw .iw-phone { position: relative; width: 200px; left: auto; top: auto; }
+    .iw-roles { display: grid; gap: 12px; }
+    .iw-roles figure { position: relative; margin: 0; border-radius: 16px; overflow: hidden; aspect-ratio: 16 / 9; border: 1px solid var(--border-2); }
+    .iw-roles img { width: 100%; height: 100%; object-fit: cover; }
+    .iw-roles figcaption {
+      position: absolute; left: 10px; bottom: 8px; padding: 3px 10px; border-radius: 99px;
+      font-size: .75rem; font-weight: 800; background: rgba(0,0,0,.6); color: #fff;
+    }
+    .chips li.warn { background: rgba(245,158,11,.14); color: #fbbf24; border-color: rgba(245,158,11,.35); }
+    .iw-list { list-style: none; padding: 0; margin: 0 0 22px; display: grid; gap: 8px; }
+    .iw-list li { color: var(--muted); font-size: .95rem; padding-left: 16px; position: relative; }
+    .iw-list li::before { content: ""; position: absolute; left: 0; top: .62em; width: 7px; height: 7px; border-radius: 50%; background: #f97316; }
+    .iw-list b { color: var(--text); margin-right: 4px; }
+    .btn.is-off { cursor: not-allowed; opacity: .7; }
+    .feature.iw .tip { bottom: auto; top: 62px; }
+    .feature.iw:hover .tip, .feature.iw:focus-visible .tip, .feature.iw.show .tip { opacity: 1; transform: translate(-50%, 0); }
+    .feature.iw:focus-visible { outline: 2px solid var(--violet-l); outline-offset: 3px; }
+
+    @media (max-width: 960px) { .feature.iw { grid-template-columns: 1fr; } }
+    @media (max-width: 640px) {
+      .iw-visual { grid-template-columns: 118px 1fr; gap: 10px; }
+      .feature.iw .iw-phone { width: 118px; border-radius: 22px; padding: 5px; }
+      .feature.iw .iw-phone img { border-radius: 18px; }
+      .feature.iw { padding-top: 76px; }
+      .iw-ribbon { white-space: normal; text-align: center; width: max-content; max-width: 88%; font-size: .76rem; }
+      .feature.iw .tip { display: none; }
+    }
+
     /* ---------- Animaciones ---------- */
     /* Barra de progreso de lectura */
     .progress { position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 70; background: var(--grad); transform-origin: 0 50%; transform: scaleX(0); }
@@ -441,7 +489,7 @@
           </a>
         </div>
         <div class="stats">
-          <div class="stat"><b class="grad-text" data-count="1">1</b><span>app publicada</span></div>
+          <div class="stat"><b class="grad-text" data-count="2">2</b><span>apps propias</span></div>
           <div class="stat"><b class="grad-text" data-count="100" data-suffix="%">100%</b><span>gratuita</span></div>
           <div class="stat"><b class="grad-text" data-count="3">3</b><span>plataformas</span></div>
           <div class="stat"><b class="grad-text">0</b><span>cuentas que crear</span></div>
@@ -542,6 +590,53 @@
         </div>
       </div>
 
+      <!-- iWorker: temporalmente fuera de servicio -->
+      <article class="feature iw rv zoom" id="iworker" tabindex="0" aria-label="iWorker: temporalmente fuera de servicio, vuelve pronto">
+        <div class="iw-ribbon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          Temporalmente fuera de servicio · Vuelve pronto
+        </div>
+        <div class="iw-visual" aria-hidden="true">
+          <div class="phone iw-phone"><img src="assets/iworker/app.jpg" alt="" loading="lazy"></div>
+          <div class="iw-roles">
+            <figure><img src="assets/iworker/usuario.jpg" alt="" loading="lazy"><figcaption>Usuario</figcaption></figure>
+            <figure><img src="assets/iworker/worker.jpg" alt="" loading="lazy"><figcaption>Worker</figcaption></figure>
+            <figure><img src="assets/iworker/emprendedor.jpg" alt="" loading="lazy"><figcaption>Emprendedor</figcaption></figure>
+          </div>
+        </div>
+        <div class="iw-info">
+          <div class="app-title">
+            <img src="assets/iworker.png" alt="Logo de iWorker" style="background:#1b1b1f">
+            <div>
+              <h3>iWorker</h3>
+              <p>Talento local sin límites</p>
+            </div>
+          </div>
+          <ul class="chips">
+            <li class="warn">Fuera de servicio</li><li>Android</li><li>Comodoro Rivadavia</li><li>Sin comisiones</li>
+          </ul>
+          <p class="desc">
+            La plataforma comodorense que conecta a trabajadores independientes,
+            emprendedores y usuarios en una comunidad justa, directa y sin comisiones ocultas.
+          </p>
+          <ul class="iw-list">
+            <li><b>Usuario</b> Encontrá el trabajador ideal en segundos.</li>
+            <li><b>Worker</b> Digitalizá tu oficio, gestioná tus clientes y aumentá tus ingresos.</li>
+            <li><b>Emprendedor</b> Tu vitrina digital disponible 24/7 para mostrar tus productos.</li>
+          </ul>
+          <div class="actions">
+            <span class="btn ghost is-off" aria-disabled="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              Vuelve pronto
+            </span>
+            <a class="btn ghost" href="mailto:enemydev.iworker@gmail.com?subject=Avisame%20cuando%20vuelva%20iWorker">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+              Avisame cuando vuelva
+            </a>
+          </div>
+        </div>
+        <span class="tip" role="tooltip">Temporalmente fuera de servicio · Vuelve pronto</span>
+      </article>
     </section>
 
     <!-- Instalar -->
@@ -679,6 +774,8 @@
       <span>© <span id="year">2026</span> EnemyDev · Alejandro Simos · Comodoro Rivadavia, Chubut</span>
       <nav aria-label="Legales">
         <a href="/hem/privacidad.html">Privacidad HEM</a>
+        <a href="iworker/terms.html">Términos iWorker</a>
+        <a href="iworker/delete.html">Eliminar cuenta iWorker</a>
       </nav>
     </div>
   </footer>
@@ -793,7 +890,7 @@
       }).catch(function () {});
 
       // iWorker: en celulares no hay "mouseover", se muestra al tocar.
-      document.querySelectorAll('.off').forEach(function (card) {
+      document.querySelectorAll('.off, .feature.iw').forEach(function (card) {
         var t;
         card.addEventListener('click', function () {
           card.classList.add('show'); clearTimeout(t);
