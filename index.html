@@ -154,7 +154,8 @@
     }
     .float-icon img { width: 72%; height: 72%; object-fit: contain; }
     .float-icon.i1 { top: -24px; left: -20px; animation-delay: -1.5s; }
-    .float-icon.i2 { right: -18px; bottom: -20px; animation-duration: 7s; animation-delay: -3.5s; }
+    .float-card.f3 { right: -22px; bottom: -22px; animation-delay: -1.5s; }
+    .float-card .beta { display: inline-block; margin-left: 7px; padding: 2px 8px; border-radius: 99px; font-size: .66rem; font-weight: 800; vertical-align: 1px; background: rgba(249,115,22,.16); color: #fdba74; border: 1px solid rgba(249,115,22,.3); }
     .float-icon.i3 { left: -30px; top: 42%; width: 44px; height: 44px; border-radius: 14px; animation-duration: 5s; color: var(--violet-l); }
     .float-icon.i3 svg { width: 22px; height: 22px; }
     @keyframes hover-y {
@@ -447,7 +448,7 @@
       .off { grid-template-columns: auto 1fr; padding: 20px; }
       .off .badge { grid-column: 1 / -1; justify-self: start; }
       .contact { padding: 30px 20px; }
-      .float-card.f1 { left: -8px; } .float-card.f2 { right: -8px; } .float-icon { width: 48px; height: 48px; border-radius: 15px; } .float-icon.i1 { left: -6px; } .float-icon.i2 { right: -4px; } .float-icon.i3 { left: -10px; width: 38px; height: 38px; }
+      .float-card.f1 { left: -8px; bottom: 100px; } .float-card.f2 { right: -8px; } .float-icon { width: 48px; height: 48px; border-radius: 15px; } .float-icon.i1 { left: -6px; } .float-card.f3 { right: -8px; } .float-icon.i3 { left: -10px; width: 38px; height: 38px; }
       footer .wrap { justify-content: center; text-align: center; }
       footer nav a { margin: 0 7px; }
     }
@@ -514,7 +515,7 @@
       <div class="portrait enter">
         <div class="frame"><img src="assets/perfil.webp" alt="Alejandro Simos" width="380" height="475"></div>
         <span class="float-icon i1" aria-hidden="true"><img src="assets/hem.png" alt=""></span>
-        <span class="float-icon i2" aria-hidden="true"><img src="assets/iworker.png" alt=""></span>
+        <div class="float-card f3"><img src="assets/iworker.png" alt="" style="background:#1b1b1f"><div>iWorker 0.22.1<span class="beta">Beta abierta</span><small>Conecta trabajadores y emprendedores</small></div></div>
         <span class="float-icon i3" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg></span>
         <div class="float-card f1">
           <img src="assets/hem.png" alt="">
@@ -631,7 +632,7 @@
             </div>
           </div>
           <ul class="chips">
-            <li class="warn">Fuera de servicio</li><li>Android</li><li>Comodoro Rivadavia</li><li>Sin comisiones</li>
+            <li class="warn">Fuera de servicio</li><li>v0.22.1 · Beta abierta</li><li>Android</li><li>Comodoro Rivadavia</li><li>Sin comisiones</li>
           </ul>
           <p class="desc">
             La plataforma comodorense que conecta a trabajadores independientes,
