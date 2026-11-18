@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>SIVIH · Inspección visual e informes</title>
+  <meta name="description" content="SIVIH: Sistema de Inspección Visual e Informes Homologados. App para empresas de vigilancia: observaciones con foto y GPS e informe PDF del turno.">
+  <meta name="theme-color" content="#050913">
+  <meta property="og:title" content="SIVIH · Inspección visual e informes">
+  <meta property="og:description" content="Registrá observaciones con foto y GPS y generá el informe PDF de tu turno.">
+  <meta property="og:image" content="../assets/sivih/logo.png">
+  <link rel="icon" type="image/png" href="../assets/sivih/logo.png">
+  <style>
+    :root { --bg: #050913; --card: rgba(255,255,255,.05); --border: rgba(96,165,250,.18); --text: #eef4ff; --muted: #9fb3d1; --blue: #1e88e5; --cyan: #22d3ee; --grad: linear-gradient(135deg, #0d47a1, #1e88e5 55%, #22d3ee); }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif; line-height: 1.5; -webkit-font-smoothing: antialiased;
+      background: radial-gradient(700px 420px at 80% -10%, rgba(30,136,229,.35), transparent 60%), radial-gradient(500px 360px at -10% 80%, rgba(34,211,238,.12), transparent 60%), var(--bg); }
+    .wrap { max-width: 540px; margin: 0 auto; padding: 32px 18px 40px; }
+    .head { text-align: center; }
+    .head img { width: 112px; height: 112px; border-radius: 50%; box-shadow: 0 0 0 2px rgba(30,136,229,.6), 0 20px 60px rgba(30,136,229,.45); animation: glow 4s ease-in-out infinite; }
+    @keyframes glow { 50% { box-shadow: 0 0 0 2px rgba(34,211,238,.7), 0 20px 70px rgba(34,211,238,.5); } }
+    h1 { letter-spacing: .5em; margin: 18px 0 2px; font-size: 1.9rem; font-weight: 900; text-shadow: 0 0 24px rgba(30,136,229,.8); }
+    .sub { color: var(--muted); margin: 0 0 24px; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 22px; padding: 20px; margin-bottom: 16px; }
+    .card h2 { font-size: 1.08rem; margin: 0 0 12px; }
+    .btn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 16px 18px; border-radius: 16px; font-weight: 800; font-size: 1.04rem; text-decoration: none; color: #fff; background: var(--grad); box-shadow: 0 14px 34px -12px rgba(30,136,229,.8); }
+    .note { color: var(--muted); font-size: .9rem; margin: 12px 0 0; }
+    .hero-photo { width: 100%; height: 200px; object-fit: cover; border-radius: 22px; border: 1px solid var(--border); margin-bottom: 16px; filter: saturate(.9) contrast(1.05); }
+    .plans { display: grid; gap: 14px; margin-bottom: 16px; }
+    .plan { position: relative; margin: 0; display: grid; gap: 10px; }
+    .plan h2 { margin: 0; }
+    .plan .note { margin: 0 0 4px; }
+    .plan.full { border-color: rgba(34,211,238,.45); box-shadow: 0 0 40px -18px rgba(34,211,238,.6); }
+    .tag { justify-self: start; font-size: .72rem; font-weight: 800; padding: 4px 10px; border-radius: 99px; background: rgba(34,211,238,.14); color: #a5f3fc; border: 1px solid rgba(34,211,238,.35); }
+    .tag.soon { background: rgba(148,163,184,.14); color: #cbd5e1; border-color: rgba(148,163,184,.35); }
+    .btn.off { background: rgba(255,255,255,.06); color: var(--muted); box-shadow: none; cursor: not-allowed; }
+    .btn.ghost { background: transparent; border: 1px solid var(--border); box-shadow: none; }
+    .note b { color: var(--text); }
+    ul.feat { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+    ul.feat li { display: flex; gap: 10px; color: var(--muted); font-size: .95rem; }
+    ul.feat li::before { content: ""; flex: none; width: 8px; height: 8px; margin-top: .55em; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 10px var(--cyan); }
+    ul.feat b { color: var(--text); }
+    .shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .shots img { width: 100%; border-radius: 14px; border: 1px solid var(--border); }
+    .ios { color: var(--muted); font-size: .9rem; text-align: center; }
+    footer { text-align: center; color: var(--muted); font-size: .8rem; margin-top: 24px; }
+    footer a { color: var(--muted); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="head">
+      <img src="../assets/sivih/logo.png" alt="SIVIH" width="112" height="112">
+      <h1>SIVIH</h1>
+      <p class="sub">Sistema de Inspección Visual e Informes Homologados</p>
+    </div>
+
+    <img class="hero-photo" src="../assets/sivih/patrulla.jpg" alt="Agente de seguridad en recorrida" width="900" height="600">
+
+    <div class="plans">
+      <div class="card plan">
+        <span class="tag soon">Próximamente</span>
+        <h2>Versión gratuita</h2>
+        <p class="note">Funciones básicas para probar SIVIH en tu recorrida. Limitada.</p>
+        <span class="btn off" aria-disabled="true">Muy pronto para descargar</span>
+      </div>
+      <div class="card plan full">
+        <span class="tag">Para empresas</span>
+        <h2>Versión full</h2>
+        <p class="note">Todas las funciones, licencias para tu equipo de vigilancia y adaptaciones a medida.</p>
+        <a class="btn" href="https://wa.me/5492975173751?text=Hola%2C%20quiero%20consultar%20por%20SIVIH%20full" target="_blank" rel="noopener">Consultar por WhatsApp</a>
+        <a class="btn ghost" href="mailto:enemydev.iworker@gmail.com?subject=Consulta%20SIVIH%20full">Consultar por mail</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Qué hace</h2>
+      <ul class="feat">
+        <li><span><b>Pensada para vigilancia:</b> recorridas, rondas e inspecciones de seguridad.</span></li>
+        <li><span><b>Turno de inspección:</b> el agente se identifica y la app registra fecha y hora de inicio.</span></li>
+        <li><span><b>Observaciones:</b> cada evento con descripción, foto y ubicación GPS.</span></li>
+        <li><span><b>Informe PDF:</b> al finalizar el turno arma el informe listo para compartir o enviar por mail.</span></li>
+        <li><span><b>Sin internet:</b> todo queda guardado en el celular.</span></li>
+      </ul>
+    </div>
+
+    <div class="shots" aria-label="Capturas de SIVIH">
+      <img src="../assets/sivih/login.jpg" alt="Inicio de sesión del agente" loading="lazy">
+      <img src="../assets/sivih/turno.jpg" alt="Turno activo" loading="lazy">
+      <img src="../assets/sivih/observacion.jpg" alt="Registrar observación" loading="lazy">
+    </div>
+
+    <p class="ios">Para Android · Foto: Unsplash.</p>
+
+    <footer>
+      Desarrollado por <a href="/">EnemyDev (Alejandro Simos)</a>
+    </footer>
+  </div>
+</body>
+</html>
