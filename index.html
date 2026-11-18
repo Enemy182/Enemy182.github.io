@@ -142,6 +142,26 @@
     .float-card .ic { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: rgba(16,185,129,.15); color: var(--green); }
     @keyframes bob { 50% { transform: translateY(-8px); } }
 
+    /* La foto flota suave y la rodean íconos de las apps que flotan */
+    .portrait .frame { animation: drift 8s ease-in-out infinite; }
+    .float-icon {
+      position: absolute; z-index: 2; width: 60px; height: 60px; border-radius: 18px;
+      display: grid; place-items: center;
+      background: rgba(20, 17, 44, .88); border: 1px solid var(--border-2);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      box-shadow: var(--shadow), 0 0 0 6px rgba(124,58,237,.08);
+      animation: hover-y 6s ease-in-out infinite;
+    }
+    .float-icon img { width: 72%; height: 72%; object-fit: contain; }
+    .float-icon.i1 { top: -24px; left: -20px; animation-delay: -1.5s; }
+    .float-icon.i2 { right: -18px; bottom: -20px; animation-duration: 7s; animation-delay: -3.5s; }
+    .float-icon.i3 { left: -30px; top: 42%; width: 44px; height: 44px; border-radius: 14px; animation-duration: 5s; color: var(--violet-l); }
+    .float-icon.i3 svg { width: 22px; height: 22px; }
+    @keyframes hover-y {
+      0%, 100% { translate: 0 0; rotate: -5deg; }
+      50% { translate: 0 -14px; rotate: 5deg; }
+    }
+
     /* Secciones */
     section { padding: 64px 0; }
     .eyebrow { color: var(--violet-l); font-weight: 800; letter-spacing: 2px; text-transform: uppercase; font-size: .76rem; margin: 0 0 10px; }
@@ -292,7 +312,6 @@
         var(--bg-2);
     }
     .feature.iw .iw-visual, .feature.iw .iw-info { filter: grayscale(.9); opacity: .62; transition: filter .5s ease, opacity .5s ease; }
-    .feature.iw:hover .iw-visual, .feature.iw:hover .iw-info { filter: grayscale(.55); opacity: .8; }
     .iw-ribbon {
       position: absolute; top: 18px; left: 50%; transform: translateX(-50%); z-index: 3;
       display: inline-flex; align-items: center; gap: 8px; white-space: nowrap;
@@ -317,9 +336,6 @@
     .iw-list li::before { content: ""; position: absolute; left: 0; top: .62em; width: 7px; height: 7px; border-radius: 50%; background: #f97316; }
     .iw-list b { color: var(--text); margin-right: 4px; }
     .btn.is-off { cursor: not-allowed; opacity: .7; }
-    .feature.iw .tip { bottom: auto; top: 62px; }
-    .feature.iw:hover .tip, .feature.iw:focus-visible .tip, .feature.iw.show .tip { opacity: 1; transform: translate(-50%, 0); }
-    .feature.iw:focus-visible { outline: 2px solid var(--violet-l); outline-offset: 3px; }
 
     @media (max-width: 960px) { .feature.iw { grid-template-columns: 1fr; } }
     @media (max-width: 640px) {
@@ -328,7 +344,6 @@
       .feature.iw .iw-phone img { border-radius: 18px; }
       .feature.iw { padding-top: 76px; }
       .iw-ribbon { white-space: normal; text-align: center; width: max-content; max-width: 88%; font-size: .76rem; }
-      .feature.iw .tip { display: none; }
     }
 
     /* ---------- Animaciones ---------- */
@@ -432,7 +447,7 @@
       .off { grid-template-columns: auto 1fr; padding: 20px; }
       .off .badge { grid-column: 1 / -1; justify-self: start; }
       .contact { padding: 30px 20px; }
-      .float-card.f1 { left: -8px; } .float-card.f2 { right: -8px; }
+      .float-card.f1 { left: -8px; } .float-card.f2 { right: -8px; } .float-icon { width: 48px; height: 48px; border-radius: 15px; } .float-icon.i1 { left: -6px; } .float-icon.i2 { right: -4px; } .float-icon.i3 { left: -10px; width: 38px; height: 38px; }
       footer .wrap { justify-content: center; text-align: center; }
       footer nav a { margin: 0 7px; }
     }
@@ -498,6 +513,9 @@
 
       <div class="portrait enter">
         <div class="frame"><img src="assets/perfil.webp" alt="Alejandro Simos" width="380" height="475"></div>
+        <span class="float-icon i1" aria-hidden="true"><img src="assets/hem.png" alt=""></span>
+        <span class="float-icon i2" aria-hidden="true"><img src="assets/iworker.png" alt=""></span>
+        <span class="float-icon i3" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg></span>
         <div class="float-card f1">
           <img src="assets/hem.png" alt="">
           <div>HEM <span class="js-ver"></span><small>Horas extras sin vueltas</small></div>
@@ -591,7 +609,7 @@
       </div>
 
       <!-- iWorker: temporalmente fuera de servicio -->
-      <article class="feature iw rv zoom" id="iworker" tabindex="0" aria-label="iWorker: temporalmente fuera de servicio, vuelve pronto">
+      <article class="feature iw rv zoom" id="iworker" aria-label="iWorker: temporalmente fuera de servicio, vuelve pronto">
         <div class="iw-ribbon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
           Temporalmente fuera de servicio · Vuelve pronto
@@ -635,7 +653,6 @@
             </a>
           </div>
         </div>
-        <span class="tip" role="tooltip">Temporalmente fuera de servicio · Vuelve pronto</span>
       </article>
     </section>
 
@@ -890,7 +907,7 @@
       }).catch(function () {});
 
       // iWorker: en celulares no hay "mouseover", se muestra al tocar.
-      document.querySelectorAll('.off, .feature.iw').forEach(function (card) {
+      document.querySelectorAll('.off').forEach(function (card) {
         var t;
         card.addEventListener('click', function () {
           card.classList.add('show'); clearTimeout(t);
