@@ -283,9 +283,78 @@
     footer nav a { color: var(--dim); text-decoration: none; margin-left: 14px; }
     footer nav a:hover { color: var(--text); }
 
-    /* Animación al aparecer */
-    .rv { opacity: 0; transform: translateY(26px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.8,.2,1); }
+    /* ---------- Animaciones ---------- */
+    /* Barra de progreso de lectura */
+    .progress { position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 70; background: var(--grad); transform-origin: 0 50%; transform: scaleX(0); }
+
+    /* Brillo que recorre el texto con degradé */
+    .shine { background-size: 220% auto; animation: shine 7s linear infinite; }
+    @keyframes shine { to { background-position: 220% center; } }
+
+    /* Entrada escalonada del encabezado */
+    .stagger > * { opacity: 0; transform: translateY(20px); animation: up .9s cubic-bezier(.2,.8,.2,1) forwards; }
+    .stagger > *:nth-child(1) { animation-delay: .05s; }
+    .stagger > *:nth-child(2) { animation-delay: .15s; }
+    .stagger > *:nth-child(3) { animation-delay: .27s; }
+    .stagger > *:nth-child(4) { animation-delay: .39s; }
+    .stagger > *:nth-child(5) { animation-delay: .51s; }
+    @keyframes up { to { opacity: 1; transform: none; } }
+    .portrait.enter { animation: pop 1.2s cubic-bezier(.2,.8,.2,1) .3s both; }
+    @keyframes pop { from { opacity: 0; transform: translateY(30px) scale(.94); } }
+
+    /* Aparición al hacer scroll (con variantes y demora escalonada) */
+    .rv { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .9s cubic-bezier(.2,.8,.2,1); transition-delay: calc(var(--d, 0) * 90ms); }
+    .rv.left { transform: translateX(-36px); }
+    .rv.right { transform: translateX(36px); }
+    .rv.zoom { transform: scale(.95) translateY(20px); }
     .rv.in { opacity: 1; transform: none; }
+
+    /* Destello en los botones principales */
+    .btn.primary { position: relative; overflow: hidden; isolation: isolate; }
+    .btn.primary::after {
+      content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+      background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,.38) 50%, transparent 70%);
+      transform: translateX(-130%); transition: transform .9s ease;
+    }
+    .btn.primary:hover::after { transform: translateX(130%); }
+
+    /* Luz que sigue al mouse dentro de las tarjetas (escritorio) */
+    .tile, .how { position: relative; overflow: hidden; }
+    .glow::before {
+      content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 0;
+      background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(167,139,250,.16), transparent 60%);
+      opacity: 0; transition: opacity .35s ease;
+    }
+    .glow:hover::before { opacity: 1; }
+    .glow > * { position: relative; z-index: 1; }
+
+    /* Teléfonos: flotan y se inclinan siguiendo el mouse */
+    .phones { perspective: 1300px; }
+    .phones-inner { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform .3s ease-out; transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); }
+    .phone.p1 { animation: drift 7s ease-in-out infinite; }
+    .phone.p2 { animation: drift 8s ease-in-out -2s infinite; }
+    .phone.p3 { animation: drift 9s ease-in-out -4s infinite; }
+    @keyframes drift { 50% { translate: 0 -12px; } }
+
+    /* Menú en celulares */
+    .menu-btn { display: none; width: 42px; height: 42px; border-radius: 12px; border: 1px solid var(--border-2); background: var(--surface); color: var(--text); cursor: pointer; place-items: center; }
+    .menu-btn span, .menu-btn span::before, .menu-btn span::after { display: block; width: 18px; height: 2px; border-radius: 2px; background: currentColor; position: relative; transition: transform .3s ease, background .3s ease; }
+    .menu-btn span::before, .menu-btn span::after { content: ""; position: absolute; left: 0; }
+    .menu-btn span::before { top: -6px; } .menu-btn span::after { top: 6px; }
+    .menu-btn[aria-expanded="true"] span { background: transparent; }
+    .menu-btn[aria-expanded="true"] span::before { transform: translateY(6px) rotate(45deg); }
+    .menu-btn[aria-expanded="true"] span::after { transform: translateY(-6px) rotate(-45deg); }
+    .mobile-menu {
+      position: absolute; left: 0; right: 0; top: 100%; padding: 10px 20px 18px;
+      background: rgba(13,11,30,.99); border-bottom: 1px solid var(--border); box-shadow: 0 24px 40px -12px rgba(0,0,0,.6);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      display: grid; gap: 4px;
+      opacity: 0; transform: translateY(-8px); pointer-events: none; transition: opacity .25s ease, transform .3s ease;
+    }
+    .mobile-menu.open { opacity: 1; transform: none; pointer-events: auto; }
+    .mobile-menu a { padding: 13px 14px; border-radius: 12px; text-decoration: none; font-weight: 700; color: var(--muted); }
+    .mobile-menu a:hover, .mobile-menu a.active { background: var(--surface-2); color: var(--text); }
+    .nav-links a.active { color: var(--text); background: var(--surface-2); }
 
     @media (max-width: 960px) {
       .hero { grid-template-columns: 1fr; text-align: center; padding-top: 40px; gap: 40px; }
@@ -295,10 +364,17 @@
       .feature { grid-template-columns: 1fr; padding: 28px; }
       .phones { height: 470px; }
       .grid-6, .install { grid-template-columns: 1fr 1fr; }
+      .install .how:last-child { grid-column: 1 / -1; }
       .about { grid-template-columns: 1fr; }
+      .rv.left, .rv.right { transform: translateY(28px); }
     }
     @media (max-width: 640px) {
-      .nav-links a:not(.cta) { display: none; }
+      .nav-links { display: none; }
+      .menu-btn { display: grid; }
+      .install .how:last-child { grid-column: auto; }
+      .hero { padding-top: 28px; }
+      .stat b { font-size: 1.2rem; }
+      section { padding: 48px 0; }
       .stats { grid-template-columns: 1fr 1fr; }
       .grid-6, .install, .contact-cards { grid-template-columns: 1fr; }
       .phone { width: 190px; }
@@ -314,8 +390,10 @@
     }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
-      .rv { opacity: 1; transform: none; }
+      .rv, .stagger > *, .portrait.enter { opacity: 1 !important; transform: none !important; }
+      .progress { display: none; }
     }
+    @media (hover: none) { .glow::before { display: none; } }
   </style>
 </head>
 <body>
@@ -330,15 +408,23 @@
         <a href="#sobre-mi">Sobre mí</a>
         <a class="cta" href="#contacto">Contacto</a>
       </nav>
+      <button class="menu-btn" id="menu-btn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu"><span></span></button>
     </div>
+    <nav class="mobile-menu" id="mobile-menu" aria-label="Menú">
+      <a href="#apps">Apps</a>
+      <a href="#instalar">Instalar</a>
+      <a href="#sobre-mi">Sobre mí</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
   </header>
+  <div class="progress" id="progress" aria-hidden="true"></div>
 
   <main id="inicio">
     <!-- Presentación -->
     <section class="wrap hero">
-      <div class="rv">
+      <div class="stagger">
         <span class="pill"><span class="dot"></span>Desarrollador · Comodoro Rivadavia</span>
-        <h1>Apps simples para la <span class="grad-text">gente de mi ciudad</span>.</h1>
+        <h1>Apps simples para la <span class="grad-text shine">gente de mi ciudad</span>.</h1>
         <p class="lead">
           Soy <b>Alejandro Simos</b> (EnemyDev). Administro redes en la Municipalidad de
           Comodoro Rivadavia y en mis ratos libres creo herramientas gratuitas que
@@ -355,14 +441,14 @@
           </a>
         </div>
         <div class="stats">
-          <div class="stat"><b class="grad-text">1</b><span>app publicada</span></div>
-          <div class="stat"><b class="grad-text">100%</b><span>gratuitas</span></div>
-          <div class="stat"><b class="grad-text">3</b><span>plataformas</span></div>
+          <div class="stat"><b class="grad-text" data-count="1">1</b><span>app publicada</span></div>
+          <div class="stat"><b class="grad-text" data-count="100" data-suffix="%">100%</b><span>gratuita</span></div>
+          <div class="stat"><b class="grad-text" data-count="3">3</b><span>plataformas</span></div>
           <div class="stat"><b class="grad-text">0</b><span>cuentas que crear</span></div>
         </div>
       </div>
 
-      <div class="portrait rv">
+      <div class="portrait enter">
         <div class="frame"><img src="assets/perfil.webp" alt="Alejandro Simos" width="380" height="475"></div>
         <div class="float-card f1">
           <img src="assets/hem.png" alt="">
@@ -383,7 +469,7 @@
         <p class="section-lead">Sin cuentas, sin vueltas y gratis. Funcionan en Android, iPhone y desde el navegador.</p>
       </div>
 
-      <article class="feature rv" id="hem">
+      <article class="feature rv zoom" id="hem">
         <div>
           <div class="app-title">
             <img src="assets/hem.png" alt="Logo de HEM">
@@ -416,40 +502,40 @@
           </div>
           <p class="meta js-meta">Gratis · Muy pronto en Google Play</p>
         </div>
-        <div class="phones" aria-hidden="true">
+        <div class="phones" aria-hidden="true"><div class="phones-inner">
           <div class="phone p2"><img src="assets/hem/calendario.jpg" alt="" loading="lazy"></div>
           <div class="phone p3"><img src="assets/hem/mes.jpg" alt="" loading="lazy"></div>
           <div class="phone p1"><img src="assets/hem/hoy.jpg" alt="Pantalla principal de HEM"></div>
-        </div>
+        </div></div>
       </article>
 
       <div class="grid-6">
-        <div class="tile rv">
+        <div class="tile rv glow" style="--d:0">
           <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg></div>
           <h4>Marcá en un toque</h4>
           <p>Al salir tocás un botón y listo. La entrada se toma de tu horario (o la marcás si querés).</p>
         </div>
-        <div class="tile rv">
+        <div class="tile rv glow" style="--d:1">
           <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2"/></svg></div>
           <h4>50% y 100% automáticos</h4>
           <p>Noches, sábados, domingos y feriados: cada hora va donde corresponde, con hora oficial de internet.</p>
         </div>
-        <div class="tile rv">
+        <div class="tile rv glow" style="--d:2">
           <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg></div>
           <h4>Planilla PDF del mes</h4>
           <p>Vela, descargala, compartila por WhatsApp o imprimila, lista para presentar.</p>
         </div>
-        <div class="tile rv">
+        <div class="tile rv glow" style="--d:0">
           <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg></div>
           <h4>Recordatorio de salida</h4>
           <p>Si te olvidás de marcar, HEM te avisa (Android). Y si estás de franco, pausás todo.</p>
         </div>
-        <div class="tile rv">
+        <div class="tile rv glow" style="--d:1">
           <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg></div>
           <h4>Cuánta plata juntás</h4>
           <p>Con la escala municipal por categoría o cargando tu propio valor hora.</p>
         </div>
-        <div class="tile rv">
+        <div class="tile rv glow" style="--d:2">
           <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
           <h4>Tus datos son tuyos</h4>
           <p>Todo queda en tu celular, sin cuentas ni servidores. Con respaldo para no perder nada.</p>
@@ -466,7 +552,7 @@
         <p class="section-lead">Elegí tu equipo y seguí los pasos. Las actualizaciones llegan solas.</p>
       </div>
       <div class="install">
-        <div class="how rv">
+        <div class="how rv glow" style="--d:0">
           <header>
             <span class="ic" style="color:#3ddc84"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 9.48l1.84-3.18a.38.38 0 0 0-.66-.38l-1.86 3.22a11.4 11.4 0 0 0-9.84 0L5.22 5.92a.38.38 0 0 0-.66.38L6.4 9.48A10.8 10.8 0 0 0 1 18h22a10.8 10.8 0 0 0-5.4-8.52zM7 15.25a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zm10 0a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5z"/></svg></span>
             <div><h4>Android</h4><small>Descarga directa</small></div>
@@ -478,14 +564,16 @@
           <p class="note-box">
             <b>¿Primera vez instalando una app que no es de Play Store?</b>
             Al abrir el archivo, Android te va a pedir permiso para <b>"instalar apps desconocidas"</b>:
-            activalo para tu navegador y tocá <b>Instalar</b>. Es normal y solo se hace una vez.
+            activalo para tu navegador y tocá <b>Instalar</b>. Si Chrome avisa que el archivo
+            "puede ser dañino", tocá <b>Descargar de todas formas</b>: pasa con toda app que no
+            viene de la tienda. Es normal y solo se hace una vez.
           </p>
           <p class="soon">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.6 1.8 13.8 12 3.6 22.2c-.4-.2-.6-.6-.6-1.1V2.9c0-.5.2-.9.6-1.1zm11.3 11.3 2.4 2.4-11 6.3 8.6-8.7zm3.6-3.6 2.8 1.6c.8.5.8 1.3 0 1.8l-2.8 1.6-2.6-2.5 2.6-2.5zM6.3 2.2l11 6.3-2.4 2.4-8.6-8.7z"/></svg>
             Muy pronto también en <b>Google Play</b>.
           </p>
         </div>
-        <div class="how rv">
+        <div class="how rv glow" style="--d:1">
           <header>
             <span class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.37 12.6c-.02-2.3 1.88-3.4 1.96-3.46-1.07-1.56-2.73-1.78-3.32-1.8-1.41-.14-2.76.83-3.48.83-.72 0-1.82-.81-3-.79-1.54.02-2.96.9-3.76 2.27-1.6 2.78-.41 6.9 1.15 9.16.76 1.1 1.67 2.34 2.86 2.3 1.15-.05 1.58-.74 2.97-.74s1.78.74 2.99.72c1.24-.02 2.02-1.12 2.77-2.23.87-1.28 1.23-2.52 1.25-2.58-.03-.01-2.4-.92-2.39-3.68zM14.1 5.86c.63-.77 1.06-1.83.94-2.89-.91.04-2.01.61-2.66 1.37-.58.67-1.09 1.76-.96 2.8 1.02.08 2.05-.52 2.68-1.28z"/></svg></span>
             <div><h4>iPhone</h4><small>Desde Safari</small></div>
@@ -497,7 +585,7 @@
           </ol>
           <a class="btn ghost" href="/hem/download/">Ver la guía para iPhone</a>
         </div>
-        <div class="how rv">
+        <div class="how rv glow" style="--d:2">
           <header>
             <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/></svg></span>
             <div><h4>¿Estás en la compu?</h4><small>Escaneá con el celular</small></div>
@@ -513,7 +601,7 @@
     <!-- Sobre mí -->
     <section id="sobre-mi" class="wrap">
       <div class="about">
-        <div class="text rv">
+        <div class="text rv left">
           <p class="eyebrow">Sobre mí</p>
           <h2>Tecnología que <span class="grad-text">une</span>, no que separa.</h2>
           <p>
@@ -528,15 +616,15 @@
           </p>
         </div>
         <div class="timeline">
-          <div class="t-item rv">
+          <div class="t-item rv right" style="--d:0">
             <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="8" rx="2"/><rect x="2" y="13" width="20" height="8" rx="2"/><path d="M6 7h.01M6 17h.01"/></svg></span>
             <div><h4>Redes e infraestructura</h4><p>Administración de redes en la Municipalidad de Comodoro Rivadavia (Huawei · Mikrotik).</p></div>
           </div>
-          <div class="t-item rv">
+          <div class="t-item rv right" style="--d:1">
             <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg></span>
             <div><h4>Desarrollo de apps</h4><p>Apps para Android, iPhone y web con Flutter, como HEM.</p></div>
           </div>
-          <div class="t-item rv">
+          <div class="t-item rv right" style="--d:2">
             <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span>
             <div><h4>Formación</h4><p>Ex estudiante de la Facultad de Ingeniería de la UNPSJB.</p></div>
           </div>
@@ -615,6 +703,86 @@
         }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
         items.forEach(function (el) { io.observe(el); });
       } else { items.forEach(function (el) { el.classList.add('in'); }); }
+
+      var calm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var fine = window.matchMedia && matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+      // Barra de progreso de lectura.
+      var bar = $('#progress');
+      var raf = 0;
+      function paint() {
+        raf = 0;
+        var h = document.documentElement.scrollHeight - innerHeight;
+        bar.style.transform = 'scaleX(' + (h > 0 ? Math.min(1, scrollY / h) : 0) + ')';
+      }
+      addEventListener('scroll', function () { if (!raf) raf = requestAnimationFrame(paint); }, { passive: true });
+      paint();
+
+      // Menú de celulares.
+      var mbtn = $('#menu-btn'), mmenu = $('#mobile-menu');
+      function setMenu(open) {
+        mmenu.classList.toggle('open', open);
+        mbtn.setAttribute('aria-expanded', String(open));
+        mbtn.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+      }
+      mbtn.addEventListener('click', function () { setMenu(!mmenu.classList.contains('open')); });
+      mmenu.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { setMenu(false); }); });
+      addEventListener('keydown', function (e) { if (e.key === 'Escape') setMenu(false); });
+
+      // Sección activa en el menú.
+      if ('IntersectionObserver' in window) {
+        var links = document.querySelectorAll('.nav-links a, .mobile-menu a');
+        var spy = new IntersectionObserver(function (es) {
+          es.forEach(function (e) {
+            if (!e.isIntersecting) return;
+            links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id); });
+          });
+        }, { rootMargin: '-45% 0px -50% 0px' });
+        document.querySelectorAll('main section[id]').forEach(function (s) { spy.observe(s); });
+      }
+
+      // Números que cuentan al aparecer.
+      function countUp(el) {
+        var end = +el.getAttribute('data-count'), suf = el.getAttribute('data-suffix') || '';
+        if (calm || end <= 1) { el.textContent = end + suf; return; }
+        var t0 = performance.now(), dur = 1400;
+        (function step(now) {
+          var k = Math.min(1, (now - t0) / dur), v = Math.round(end * (1 - Math.pow(1 - k, 3)));
+          el.textContent = v + suf;
+          if (k < 1) requestAnimationFrame(step);
+        })(t0);
+      }
+      var counters = document.querySelectorAll('[data-count]');
+      if ('IntersectionObserver' in window) {
+        var cio = new IntersectionObserver(function (es) {
+          es.forEach(function (e) { if (e.isIntersecting) { countUp(e.target); cio.unobserve(e.target); } });
+        }, { threshold: .6 });
+        counters.forEach(function (el) { el.textContent = '0' + (el.getAttribute('data-suffix') || ''); cio.observe(el); });
+      }
+
+      if (fine && !calm) {
+        // Luz que sigue al mouse en las tarjetas.
+        document.querySelectorAll('.glow').forEach(function (el) {
+          el.addEventListener('pointermove', function (e) {
+            var r = el.getBoundingClientRect();
+            el.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+            el.style.setProperty('--my', (e.clientY - r.top) + 'px');
+          });
+        });
+        // Los teléfonos se inclinan levemente hacia el mouse.
+        var feat = $('.feature'), inner = $('.phones-inner');
+        if (feat && inner) {
+          feat.addEventListener('pointermove', function (e) {
+            var r = feat.getBoundingClientRect();
+            var x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+            inner.style.setProperty('--ry', (x * 10).toFixed(2) + 'deg');
+            inner.style.setProperty('--rx', (-y * 8).toFixed(2) + 'deg');
+          });
+          feat.addEventListener('pointerleave', function () {
+            inner.style.setProperty('--ry', '0deg'); inner.style.setProperty('--rx', '0deg');
+          });
+        }
+      }
 
       // Versión y tamaño del APK publicado.
       fetch('/hem/download/apk.json', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (j) {
