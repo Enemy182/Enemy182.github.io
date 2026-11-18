@@ -34,6 +34,12 @@
     .tag { justify-self: start; font-size: .72rem; font-weight: 800; padding: 4px 10px; border-radius: 99px; background: rgba(34,211,238,.14); color: #a5f3fc; border: 1px solid rgba(34,211,238,.35); }
     .tag.soon { background: rgba(148,163,184,.14); color: #cbd5e1; border-color: rgba(148,163,184,.35); }
     .btn.off { background: rgba(255,255,255,.06); color: var(--muted); box-shadow: none; cursor: not-allowed; }
+    ul.limits { list-style: none; padding: 0; margin: 2px 0 6px; display: grid; gap: 6px; }
+    ul.limits li { position: relative; padding-left: 24px; font-size: .9rem; color: var(--text); }
+    ul.limits li::before { position: absolute; left: 0; top: 0; font-weight: 900; }
+    ul.limits li.ok::before { content: "✓"; color: #34d399; }
+    ul.limits li.no { color: var(--muted); }
+    ul.limits li.no::before { content: "🔒"; font-size: .8rem; filter: grayscale(1); }
     .btn.ghost { background: transparent; border: 1px solid var(--border); box-shadow: none; }
     .note b { color: var(--text); }
     ul.feat { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
@@ -59,15 +65,26 @@
 
     <div class="plans">
       <div class="card plan">
-        <span class="tag soon">Próximamente</span>
-        <h2>Versión gratuita</h2>
-        <p class="note">Funciones básicas para probar SIVIH en tu recorrida. Limitada.</p>
-        <span class="btn off" aria-disabled="true">Muy pronto para descargar</span>
+        <span class="tag">Gratis · v1.1 Demo</span>
+        <h2>SIVIH Free</h2>
+        <p class="note">Probá SIVIH en tu recorrida: turno, observaciones con foto e informe PDF.</p>
+        <ul class="limits">
+          <li class="ok">Turno de inspección e informe PDF</li>
+          <li class="ok">Observaciones con descripción y foto</li>
+          <li class="no">Hasta 3 observaciones por turno</li>
+          <li class="no">GPS y ubicación en el informe</li>
+          <li class="no">Archivo de informes anteriores</li>
+        </ul>
+        <a class="btn" href="SIVIH-Free.apk" download>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
+          Descargar SIVIH Free (20 MB)
+        </a>
+        <p class="note">¿No se instala? Probá la <a href="SIVIH-Free-32bits.apk" download style="color:#a5f3fc">versión para celulares más viejos</a>.</p>
       </div>
       <div class="card plan full">
         <span class="tag">Para empresas</span>
         <h2>Versión full</h2>
-        <p class="note">Todas las funciones, licencias para tu equipo de vigilancia y adaptaciones a medida.</p>
+        <p class="note">Todas las funciones, sin límites: GPS, observaciones ilimitadas, archivo de informes, licencias para tu equipo de vigilancia y adaptaciones a medida.</p>
         <a class="btn" href="https://wa.me/5492975173751?text=Hola%2C%20quiero%20consultar%20por%20SIVIH%20full" target="_blank" rel="noopener">Consultar por WhatsApp</a>
         <a class="btn ghost" href="mailto:enemydev.iworker@gmail.com?subject=Consulta%20SIVIH%20full">Consultar por mail</a>
       </div>
@@ -88,6 +105,16 @@
       <img src="../assets/sivih/login.jpg" alt="Inicio de sesión del agente" loading="lazy">
       <img src="../assets/sivih/turno.jpg" alt="Turno activo" loading="lazy">
       <img src="../assets/sivih/observacion.jpg" alt="Registrar observación" loading="lazy">
+    </div>
+
+    <div class="card">
+      <h2>¿Primera vez instalando una app que no es de Play Store?</h2>
+      <p class="note" style="margin:0">
+        Al abrir el archivo, Android te pide permiso para <b>"instalar apps desconocidas"</b>:
+        activalo para tu navegador y tocá <b>Instalar</b>. Si Chrome avisa que el archivo
+        "puede ser dañino", tocá <b>Descargar de todas formas</b>: pasa con toda app que no
+        viene de la tienda.
+      </p>
     </div>
 
     <p class="ios">Para Android · Foto: Unsplash.</p>
