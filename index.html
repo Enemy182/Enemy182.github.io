@@ -14,7 +14,7 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%234f46e5'/%3E%3Cstop offset='.5' stop-color='%237c3aed'/%3E%3Cstop offset='1' stop-color='%23db2777'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Ctext x='32' y='45' font-family='Arial' font-weight='900' font-size='36' text-anchor='middle' fill='white'%3EE%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&family=Orbitron:wght@900&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #0b0a1a;
@@ -156,6 +156,8 @@
     .float-icon.i1 { top: -24px; left: -20px; animation-delay: -1.5s; }
     .float-card.f3 { right: -22px; bottom: -22px; animation-delay: -1.5s; }
     .float-card.f4 { right: -44px; top: 46%; animation-delay: -4.5s; }
+    .float-card.f5 { left: -64px; top: 17%; animation-delay: -2.2s; }
+    .float-card .beta.new { background: rgba(255,212,0,.16); color: #ffe680; border-color: rgba(255,212,0,.4); }
     .float-card .beta.demo { background: rgba(34,211,238,.14); color: #a5f3fc; border-color: rgba(34,211,238,.35); }
     .sv-plan.free { border-color: rgba(52,211,153,.4); }
     .sv-plan.free em { background: rgba(52,211,153,.14); color: #a7f3d0; }
@@ -361,6 +363,30 @@
       .feature.sv .phone.sv-p1 { left: 2%; } .feature.sv .phone.sv-p2 { right: 2%; }
     }
 
+    /* ---------- SFX Forge ---------- */
+    .feature.fx {
+      margin-top: 22px;
+      background:
+        radial-gradient(600px 320px at 100% 0%, rgba(255,212,0,.20), transparent 70%),
+        radial-gradient(500px 300px at 0% 100%, rgba(255,159,0,.12), transparent 70%),
+        #0b0b0b;
+      border-color: rgba(255,212,0,.25);
+    }
+    .feature.fx .app-title h3 { font-family: Orbitron, Montserrat, sans-serif; letter-spacing: 1px; }
+    .chips li.yel { background: rgba(255,212,0,.16); color: #ffe680; border-color: rgba(255,212,0,.4); }
+    .feature.fx .chips li:not(.yel) { background: rgba(255,255,255,.06); color: #e5e5e5; border-color: rgba(255,255,255,.12); }
+    .btn.primary.fx-btn { background: #ffd400; color: #0a0a0a; box-shadow: 0 12px 30px -10px rgba(255,212,0,.8); }
+    .fx-eq { display: flex; align-items: flex-end; gap: 4px; height: 34px; margin: -6px 0 20px; }
+    .fx-eq i { flex: 1; max-width: 8px; border-radius: 3px; background: linear-gradient(to top, #ff9f00, #ffd400, #fff4a3); box-shadow: 0 0 10px rgba(255,212,0,.5); animation: fxeq 1s ease-in-out infinite alternate; }
+    .fx-eq i:nth-child(odd) { animation-duration: .75s; }
+    .fx-eq i:nth-child(3n) { animation-duration: 1.25s; }
+    .fx-eq i:nth-child(4n) { animation-delay: -.4s; }
+    @keyframes fxeq { from { height: 14%; } to { height: 100%; } }
+    .feature.fx .phone { aspect-ratio: 540 / 960; background: linear-gradient(160deg, #3a3000, #0e0c00); }
+    .feature.fx .phones { height: 470px; }
+    @media (max-width: 960px) { .feature.fx .phones { height: 440px; } }
+    @media (max-width: 640px) { .feature.fx .phones { height: 380px; } }
+
     /* ---------- iWorker (fuera de servicio) ---------- */
     .feature.iw {
       margin-top: 22px; grid-template-columns: 1fr 1fr; padding-top: 64px;
@@ -505,7 +531,7 @@
       .off { grid-template-columns: auto 1fr; padding: 20px; }
       .off .badge { grid-column: 1 / -1; justify-self: start; }
       .contact { padding: 30px 20px; }
-      .float-card.f1 { left: -8px; bottom: 100px; } .float-card.f2 { right: -8px; } .float-icon { width: 48px; height: 48px; border-radius: 15px; } .float-icon.i1 { left: -6px; } .float-card.f3 { right: -8px; } .float-card.f4 { right: -8px; top: 36px; } .float-card.f2 { display: none; } .float-icon.i3 { left: -10px; width: 38px; height: 38px; }
+      .float-card.f1 { left: -8px; bottom: 100px; } .float-card.f2 { right: -8px; } .float-icon { width: 48px; height: 48px; border-radius: 15px; } .float-icon.i1 { left: -6px; } .float-card.f3 { right: -8px; } .float-card.f4 { right: -8px; top: 52px; } .float-card.f2 { display: none; } .float-card.f5 { left: -8px; top: -26px; } .float-icon.i1 { display: none; } .float-icon.i3 { left: -10px; width: 38px; height: 38px; }
       footer .wrap { justify-content: center; text-align: center; }
       footer nav a { margin: 0 7px; }
     }
@@ -560,7 +586,7 @@
           </a>
         </div>
         <div class="stats">
-          <div class="stat"><b class="grad-text" data-count="3">3</b><span>apps propias</span></div>
+          <div class="stat"><b class="grad-text" data-count="4">4</b><span>apps propias</span></div>
           <div class="stat"><b class="grad-text" data-count="100" data-suffix="%">100%</b><span>gratuita</span></div>
           <div class="stat"><b class="grad-text" data-count="3">3</b><span>plataformas</span></div>
           <div class="stat"><b class="grad-text">0</b><span>cuentas que crear</span></div>
@@ -570,6 +596,7 @@
       <div class="portrait enter">
         <div class="frame"><img src="assets/perfil.webp" alt="Alejandro Simos" width="380" height="475"></div>
         <span class="float-icon i1" aria-hidden="true"><img src="assets/hem.png" alt=""></span>
+        <div class="float-card f5"><img src="assets/sfxforge/logo.png" alt="" style="padding:0"><div>SFX Forge 1.0<span class="beta new">Nuevo</span><small>Grabá y editá sonidos</small></div></div>
         <div class="float-card f4"><img src="assets/sivih/logo.png" alt="" style="border-radius:50%;padding:0"><div>SIVIH 1.1<span class="beta demo">Demo</span><small>Inspección con foto y PDF</small></div></div>
         <div class="float-card f3"><img src="assets/iworker.png" alt="" style="background:#1b1b1f"><div>iWorker 0.22.1<span class="beta">Beta abierta</span><small>Conecta trabajadores y emprendedores</small></div></div>
         <span class="float-icon i3" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg></span>
@@ -717,6 +744,44 @@
         </div>
       </article>
 
+      <!-- SFX Forge -->
+      <article class="feature fx rv zoom" id="sfxforge">
+        <div>
+          <div class="app-title">
+            <img src="assets/sfxforge/logo.png" alt="Logo de SFX Forge" style="padding:0;background:#0a0a0a;border-color:rgba(255,212,0,.55)">
+            <div>
+              <h3>SFX Forge</h3>
+              <p>Grabá, editá y exportá sonidos para tus juegos</p>
+            </div>
+          </div>
+          <ul class="chips">
+            <li class="yel">Nuevo · Gratis</li><li>Android</li><li>+25 efectos</li><li>MP3 · OGG · WAV</li><li>Roblox</li>
+          </ul>
+          <p class="desc">
+            Grabá con el micrófono, cortá arrastrando la forma de onda y transformá el sonido
+            con eco, reverb, robot, 8-bit, tono grave o agudo, cámara lenta y mucho más.
+            Exportalo listo para Roblox Studio, ordenado en tus carpetas.
+          </p>
+          <div class="fx-eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="actions">
+            <a class="btn primary fx-btn" href="/sfxforge/SFX-Forge.apk" download>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
+              Descargar para Android <small>· 38 MB</small>
+            </a>
+            <a class="btn ghost" href="/sfxforge/">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+              Conocé SFX Forge
+            </a>
+          </div>
+          <p class="meta">Versión 1.0 · Sonidos online gratis (CC0) incluidos</p>
+        </div>
+        <div class="phones fx-phones" aria-hidden="true"><div class="phones-inner">
+          <div class="phone p2"><img src="assets/sfxforge/grabar.jpg" alt="" loading="lazy"></div>
+          <div class="phone p3"><img src="assets/sfxforge/online.jpg" alt="" loading="lazy"></div>
+          <div class="phone p1"><img src="assets/sfxforge/editor.jpg" alt="Editor de SFX Forge" loading="lazy"></div>
+        </div></div>
+      </article>
+
       <!-- iWorker: temporalmente fuera de servicio -->
       <article class="feature iw rv zoom" id="iworker" aria-label="iWorker: temporalmente fuera de servicio, vuelve pronto">
         <div class="iw-ribbon" aria-hidden="true">
@@ -811,7 +876,7 @@
           </div>
           <div class="t-item rv right" style="--d:1">
             <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg></span>
-            <div><h4>Desarrollo de apps</h4><p>Apps para Android, iPhone y web con Flutter: HEM, SIVIH e iWorker.</p></div>
+            <div><h4>Desarrollo de apps</h4><p>Apps para Android, iPhone y web con Flutter: HEM, SIVIH, SFX Forge e iWorker.</p></div>
           </div>
           <div class="t-item rv right" style="--d:2">
             <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span>
